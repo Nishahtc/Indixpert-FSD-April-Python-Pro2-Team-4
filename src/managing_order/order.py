@@ -1,7 +1,7 @@
 import json
 import os
 from src.managing_order.order_model import OrderModel
-ORDER_FILE = "src\database\order.json"
+ORDER_FILE = "src/database/order.json"
 
 class Order:
     def __init__(self):

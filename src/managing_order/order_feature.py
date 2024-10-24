@@ -9,21 +9,27 @@ class OrderFeature(ManageOrder):
             if(not customer_name):
                 raise Exception("You can't enter empty name")
             
-            table_number = input("Enter table number") # i should call table method or make valid
+            table_number = table_number_validate(input("Enter table number")) # i should call table method or make valid
+
             if(not table_number):
                 raise Exception("please enter valid table number")
             
-            items = input(f"what you want to try today \n please order : ")# same
-            if(not items):
-                raise Exception("please enter a valid item")
-            
-            quantity = input("please enter quantity : ")
-            if(not quantity):
-                raise Exception("please enter valid quantity")
-            
-            #  add amount here 
-            self.add_order(customer_name, table_number, items, quantity)
+            while True:
+                items = input("What would you like to order today? \nPlease enter an item: ")
+                if not items:
+                    raise Exception("Please enter a valid item")
+                
 
+                quantity = input("Please enter quantity: ")
+                if not quantity.isdigit() or int(quantity) <= 0:
+                    raise Exception("Please enter a valid quantity")
+                
+                self.add_order(customer_name, table_number, items, int(quantity))
+                more_items = input("Do you want to order another item? (yes/no): ").upper().strip()
+                if more_items != 'yes':
+                    print("Order process finished.")
+                    break     
+            
         except Exception as error:
             print(error)
 

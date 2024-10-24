@@ -9,6 +9,7 @@ class OrderModel:
         self.total_amount = total_amount
         self.order_date = order_date
 
+
     def __str__(self):
         return {
             "id" : {self.id},
@@ -19,5 +20,6 @@ class OrderModel:
             "total amount" : {self.total_amount},
             "order date" : {self.order_date}
         }
+    
 
     
