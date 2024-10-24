@@ -155,5 +155,3 @@ class RestaurantSystem:
         elif user.role == 'staff':
             self.system.staff_tasks()
 
-restaurant_system = RestaurantSystem()
-restaurant_system.display_menu()

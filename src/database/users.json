@@ -12,5 +12,12 @@
         "username": "jkl12",
         "password": "123456",
         "role": "staff"
+    },
+    {
+        "first_name": "Gurav",
+        "last_name": "kumar",
+        "username": "gurav12",
+        "password": "huil214",
+        "role": "staff"
     }
 ]
