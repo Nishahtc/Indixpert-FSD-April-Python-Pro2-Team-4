@@ -1,6 +1,9 @@
 import json
 import os
 
+DATABASE_FOLDER = "src/database"
+MENU_FILE_PATH = os.path.join(DATABASE_FOLDER, "menu.json")
+
 class MenuItem:
     def __init__(self, name, price):
         self.name = name
@@ -9,20 +12,40 @@ class MenuItem:
     def __str__(self):
         return f"{self.name}: {self.price}"
 
+    @classmethod
+    def from_dict(cls, item_dict):
+        return cls(item_dict['name'], item_dict['price'])
+
 class Menu:
-    def __init__(self, filename='menu.json'):
-        self.filename = filename
+    MEAL_TYPES = [
+        "breakfast", "lunch", "dinner", "snacks",
+        "soups", "starters", "main_course", "noodles",
+        "rice", "desserts", "extras", "tea_and_coffee",
+        "aerated_beverages", "ice_cream \n"
+    ]
+
+    def __init__(self, menu_file=MENU_FILE_PATH):
+        if not os.path.exists(DATABASE_FOLDER):
+            os.makedirs(DATABASE_FOLDER)
+
+        self.file = menu_file
         self.menu_data = self.load_menu()
 
     def load_menu(self):
-        if os.path.exists(self.filename):
-            with open(self.filename, 'r') as file:
-                return json.load(file)
-        return {meal: [] for meal in []}
+        if os.path.exists(self.file):
+            with open(self.file, 'r') as f:
+                try:
+                    menu_data = json.load(f)
+                    return {meal: [MenuItem.from_dict(item) for item in items] for meal, items in menu_data.items()}
+                except json.JSONDecodeError:
+                    print("Error loading menu. Starting with an empty menu.")
+        
+        return {meal: [] for meal in self.MEAL_TYPES}
 
     def save_menu(self):
-        with open(self.filename, 'w') as file:
-            json.dump(self.menu_data, file, indent=4)
+        with open(self.file, 'w') as file:
+            json.dump({meal: [item.__dict__ for item in items] 
+            for meal, items in self.menu_data.items()}, file, indent=4)
 
     def view_menu(self, meal_type):
         if meal_type not in self.menu_data:
@@ -34,10 +57,10 @@ class Menu:
             print("  No items.")
         else:
             for index, item in enumerate(items, start=1):
-                print(f"  {index}. {MenuItem(item['name'], item['price'])}")
+                print(f"  {index}. {item}")
 
     def add_item(self, meal_type, name, price):
-        new_item = {"name": name, "price": price}
+        new_item = MenuItem(name, price)
         self.menu_data[meal_type].append(new_item)
         self.save_menu()
         print(f"Added to {meal_type}: {new_item}")
@@ -56,9 +79,9 @@ class Menu:
             return
         item = self.menu_data[meal_type][index]
         if name:
-            item['name'] = name
+            item.name = name
         if price is not None:
-            item['price'] = price
+            item.price = price
         self.save_menu()
         print(f"Updated in {meal_type}: {item}")
 
@@ -71,27 +94,32 @@ def main():
         print("2. Add Menu Item")
         print("3. Delete Menu Item")
         print("4. Update Menu Item")
-        
+        print("5. Exit")
+
         choice = input("Choose an option: ")
 
         if choice == '1':
             print("------------------------------")
             print("    ******MENU LIST******     ")
             print("------------------------------")
-            print("\n1.breakfast","\n2.lunch","\n3.dinner","\n4.snacks", "\n5.soups","\n6.starters","\n7.main_course","\n8.noodles",
-                  "\n9.rice","\n10.desserts","\n11.extras","\n12.tea_and_coffee","\n13.aerated_beverages","\n14.ice_cream" )
-            print()
+            print("\nAvailable meal types:")
+            for i, meal in enumerate(Menu.MEAL_TYPES, start=1):
+                print(f"  {i}. {meal.capitalize()}")
+               
             meal_type = input("Enter meal type: ").strip().lower()
             menu.view_menu(meal_type)
             
         elif choice == '2':
             meal_type = input("Enter meal type: ").strip().lower()
-            if meal_type not in menu.menu_data:
+            if meal_type not in Menu.MEAL_TYPES:
                 print("Invalid meal type.")
                 continue
             name = input("Enter item name: ")
             price_input = input("Enter item price: ")
+            
             try:
+                if not price_input:
+                    raise ValueError("Price cannot be empty.")
                 price = float(price_input)
                 if price < 0:
                     raise ValueError("Price cannot be negative.")
@@ -101,33 +129,39 @@ def main():
                 
         elif choice == '3':
             meal_type = input("Enter meal type: ").strip().lower()
-            if meal_type not in menu.menu_data:
+            if meal_type not in Menu.MEAL_TYPES:
                 print("Invalid meal type.")
                 continue
             menu.view_menu(meal_type)  
             index = input("Enter item index to delete: ")
             try:
-                index = int(index) - 1
+                index = int(index) 
                 menu.delete_item(meal_type, index)
             except (ValueError, IndexError):
                 print("Invalid input. Please enter a valid numeric index.")
                 
         elif choice == '4':
             meal_type = input("Enter meal type: ").strip().lower()
-            if meal_type not in menu.menu_data:
+            if meal_type not in Menu.MEAL_TYPES:
                 print("Invalid meal type.")
                 continue
             menu.view_menu(meal_type) 
             index = input("Enter item index to update: ")
+           
             try:
-                index = int(index) - 1
-                name = input("Enter new item name: ")
-                price_input = input("Enter new item price: ")
+                index = int(index)
+                name = input("Enter new item name (leave blank for no change): ")
+                price_input = input("Enter new item price (leave blank for no change): ")
                 price = float(price_input) if price_input else None
+                
                 if price is not None and price < 0:
                     raise ValueError("Price cannot be negative.")
                 menu.update_item(meal_type, index, name if name else None, price)
             except (ValueError, IndexError):
                 print("Invalid input. Please enter a valid numeric index or a valid price.")
+        
+        elif choice == '5':
+            print("Exiting the menu management system.")
+            break
 
 main()
