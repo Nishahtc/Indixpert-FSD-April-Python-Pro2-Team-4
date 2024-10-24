@@ -20,8 +20,8 @@ class Menu:
     MEAL_TYPES = [
         "breakfast", "lunch", "dinner", "snacks",
         "soups", "starters", "main_course", "noodles",
-        "rice", "desserts", "extras", "tea_and_coffee",
-        "aerated_beverages", "ice_cream \n"
+        "rice", "desserts", "tea_and_coffee",
+        "ice_cream \n"
     ]
 
     def __init__(self, menu_file=MENU_FILE_PATH):
@@ -64,14 +64,20 @@ class Menu:
         self.menu_data[meal_type].append(new_item)
         self.save_menu()
         print(f"Added to {meal_type}: {new_item}")
+        print("\n-------- Add Successfully ---------")
 
     def delete_item(self, meal_type, index):
-        if meal_type not in self.menu_data or index < 0 or index >= len(self.menu_data[meal_type]):
-            print("Invalid index.")
+        if meal_type not in self.menu_data:
+            print(self.ERROR_INVALID_MEAL_TYPE)
             return
+        if index < 0 or index >= len(self.menu_data[meal_type]):
+            print(self.ERROR_INVALID_INDEX)
+            return
+
         removed_item = self.menu_data[meal_type].pop(index)
         self.save_menu()
         print(f"Deleted from {meal_type}: {removed_item}")
+        print("\n-------- Delete Successfully --------")
 
     def update_item(self, meal_type, index, name=None, price=None):
         if meal_type not in self.menu_data or index < 0 or index >= len(self.menu_data[meal_type]):
@@ -84,6 +90,7 @@ class Menu:
             item.price = price
         self.save_menu()
         print(f"Updated in {meal_type}: {item}")
+        print("\n-------- Update Successfully --------")
 
 def main():
     menu = Menu()
@@ -130,36 +137,37 @@ def main():
         elif choice == '3':
             meal_type = input("Enter meal type: ").strip().lower()
             if meal_type not in Menu.MEAL_TYPES:
-                print("Invalid meal type.")
+              
                 continue
             menu.view_menu(meal_type)  
-            index = input("Enter item index to delete: ")
+            index_input = input("Enter item index to delete: ")
+
             try:
-                index = int(index) 
+                index = int(index_input) 
                 menu.delete_item(meal_type, index)
-            except (ValueError, IndexError):
+            except ValueError:
                 print("Invalid input. Please enter a valid numeric index.")
-                
+
+        
         elif choice == '4':
             meal_type = input("Enter meal type: ").strip().lower()
             if meal_type not in Menu.MEAL_TYPES:
                 print("Invalid meal type.")
                 continue
-            menu.view_menu(meal_type) 
+            menu.view_menu(meal_type)
             index = input("Enter item index to update: ")
-           
+
             try:
                 index = int(index)
-                name = input("Enter new item name (leave blank for no change): ")
-                price_input = input("Enter new item price (leave blank for no change): ")
-                price = float(price_input) if price_input else None
-                
-                if price is not None and price < 0:
-                    raise ValueError("Price cannot be negative.")
-                menu.update_item(meal_type, index, name if name else None, price)
-            except (ValueError, IndexError):
+                name = input("Enter new item name (leave blank for no change): ").strip()
+                price_input = input("Enter new item price (leave blank for no change): ").strip()
+                new_name = name if name else None
+                new_price = float(price_input) if price_input else None
+
+                menu.update_item(meal_type, index, new_name, new_price)
+            except ValueError:
                 print("Invalid input. Please enter a valid numeric index or a valid price.")
-        
+
         elif choice == '5':
             print("Exiting the menu management system.")
             break
