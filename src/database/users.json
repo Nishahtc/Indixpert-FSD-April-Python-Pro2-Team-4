@@ -1,0 +1,16 @@
+[
+    {
+        "first_name": "abc",
+        "last_name": "def",
+        "username": "admin",
+        "password": "12345",
+        "role": "admin"
+    },
+    {
+        "first_name": "jkl",
+        "last_name": "jkl",
+        "username": "jkl12",
+        "password": "123456",
+        "role": "staff"
+    }
+]
