@@ -15,7 +15,22 @@ def order_menu():
 
         choice = int(input('Please Chooose Any Option : '))
         if(choice == 1):
-            order.()
+            order.order()
+            
+        elif(choice == 2):
+            order.update_item()
+
+        elif(choice == 3):
+            order.cancel_item()
+
+        elif(choice == 4):
+            order.search_order()
+
+        elif(choice == 5):
+            order.search_all_order()
+
+        else:
+            print("Please choose a valid option")
             
   
             

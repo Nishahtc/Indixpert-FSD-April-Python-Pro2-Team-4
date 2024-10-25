@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime
 from src.managing_order.order_model import OrderModel
 from src.managing_order.order import Order
-from src.
+from src
 
 
 class ManageOrder(Order):
