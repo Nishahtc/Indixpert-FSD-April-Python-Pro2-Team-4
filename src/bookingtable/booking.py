@@ -1,5 +1,8 @@
+import json
+import os
+
 class TableBookingSystem:
-    def __init__(self):  # Corrected the constructor method name
+    def __init__(self):
         self.tables = {1: None, 2: None, 3: None, 4: None, 5: None}
 
     def view_available_tables(self):
@@ -89,6 +92,3 @@ if __name__ == "__main__":  # Corrected the main check
         else:
             print("Invalid choice. Please try again.")
 
-                
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        

@@ -164,4 +164,8 @@ def main():
             print("Exiting the menu management system.")
             break
 
+<<<<<<< HEAD
 #main()
+=======
+# main()
+>>>>>>> 430363e95795517b7a0db42ce73da8500055afcc

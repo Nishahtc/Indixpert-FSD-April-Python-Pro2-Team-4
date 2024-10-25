@@ -154,4 +154,3 @@ class RestaurantSystem:
             self.system.admin_tasks()
         elif user.role == 'staff':
             self.system.staff_tasks()
-
