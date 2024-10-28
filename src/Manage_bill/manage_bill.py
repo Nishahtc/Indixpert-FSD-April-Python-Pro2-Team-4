@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
-from src.bill_manage.bill_model import BillModel
-from src.bill_manage.bill import Bill
+from src.Manage_bill.bill_model import BillModel
+from src.Manage_bill.bill import Bill
 from src.use
 
 
@@ -9,6 +9,7 @@ class ManageBill(Bill):
     def create_bill(self, bill_id, customer_name, customer_phone_no, items, quantity, total_amount, date_time ):
         id = str(uuid.uuid4())[:6]
         date_time = date_time.now()
+        
         
 
     def get_bill(self, bill_id):

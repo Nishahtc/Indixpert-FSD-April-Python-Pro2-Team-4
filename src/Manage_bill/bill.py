@@ -1,6 +1,6 @@
 import json
 import os
-from src.bill_manage.bill_model import BillModel
+from src.Manage_bill.bill_model import BillModel
 BILL_FILE = "src/database/bill.json"
 
 class Bill:
