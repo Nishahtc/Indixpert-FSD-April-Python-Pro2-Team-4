@@ -16,7 +16,7 @@ class Bill:
         else:
             return []
         
-    def save_load(self):
+    def save_bill(self):
         with open(BILL_FILE, 'w') as file:
             all_bill = [bill.__dic__ for bill in self.bills]
             json.dump(all_bill, file, indent=4)

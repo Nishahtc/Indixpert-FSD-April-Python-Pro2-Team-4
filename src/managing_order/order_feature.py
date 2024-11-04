@@ -5,58 +5,67 @@ from src.utility.check_order import check_order
 class OrderFeature(ManageOrder):
     def order(self):
         try:
-            customer_name = customer_name_validate(input("Enter customer name : "))
-            if(not customer_name):
-                raise Exception("You can't enter empty name")
-            
-            table_number = table_number_validate(input("Enter table number")) # i should call table method or make valid
-
-            if(not table_number):
-                raise Exception("please enter valid table number")
-            
             while True:
-                items = input("What would you like to order today? \nPlease enter an item: ")
-                if not items:
-                    raise Exception("Please enter a valid item")
+                name = customer_name_validate(input("Enter the customer name : "))
+                if(not name):
+                    raise Exception("Enter a valid customer name ")
+
+                modile_no = valide_phone_no(input("Enter modile number : "))
+                if(not modile_no):
+                    raise Exception("Enter a valid mobile no")
+                
+                table_number = input("Enter table")
+                if
                 
 
-                quantity = input("Please enter quantity: ")
-                if not quantity.isdigit() or int(quantity) <= 0:
-                    raise Exception("Please enter a valid quantity")
+
+                item = validate_item(input("Enter the item name : "))
+                if(not item):
+                    raise Exception("Enter a valid item")
                 
-                self.add_order(customer_name, table_number, items, int(quantity))
-                more_items = input("Do you want to order another item? (yes/no): ").upper().strip()
-                if more_items != 'yes':
-                    print("Order process finished.")
-                    break     
-            
+                quantity = quantity_validate(input("Enter the quantity of the item : "))
+                if(not quantity):
+                    raise Exception("Enter a valid quantity")
+                
+                price = input("Enter the price of the item : ")
+                if not price.replace('.', '', 1).isdigit() or float(price) <= 0:
+                    raise Exception("Enter a valid price")
+                
+                add_more = input("Do you want to add another item? (yes/no): ").strip().upper()
+                if add_more != 'yes':
+                    break
+                print("Bill created successfully")
+
         except Exception as error:
             print(error)
+
+        
 
             
     def update_item(self):
         try:
-            customer_name = customer_name_validate(input("Enter customer name : "))
-            if(not customer_name):
-                raise Exception("enter valid name ")
-            
-            items = input("Enter your order item which u want to update : ")
-            if(not items):
-                raise Exception("enter valid item")
-            
-            table_number = input("Enter table number : ")
-            if(not table_number):
-                raise Exception("enter valid table number")
-            
-            quantity = input("Enter quantity : ")
-            if(not quantity):
-                raise Exception("enter valid quantity")
-            
-            self.update_order(customer_name, items,table_number, quantity)
+            while True:
+                item = validate_item(input("Enter the item name : "))
+                if(not item):
+                    raise Exception("Enter a valid item")
+                
+                quantity = quantity_validate(input("Enter a valid quantity"))
+                if(not quantity):
+                    raise Exception("Enter the quantity of the item : ")
+                
+                price = input("Enter the price of the item : ")
+                if not price.replace('.', '', 1).isdigit() or int(price) <= 0:
+                    raise Exception("Enter a valid price")
+                
+                add_more = input("Do you want to add another item? (yes/no): ").strip().upper()
+                if add_more != 'yes':
+                    break
+                print("Bill updated  successfully")
 
         except Exception as error:
             print(error)
-
+            
+            
     def cancel_item(self):
         try:
             id = validate_id(input("Enter id : "))
