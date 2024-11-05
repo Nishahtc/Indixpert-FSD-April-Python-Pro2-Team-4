@@ -1,7 +1,8 @@
 from src.Manage_bill.manage_bill import ManageBill
 from src.utility.validation import*
 from src.Manage_bill.manage_bill import ManageBill
-
+from src.menu_mangment.menu_fecture import MenuItem
+from src.bookingtable.booking import TableBookingSystem
 
 class BillFeature(ManageBill):
     def bill_create(self):
@@ -10,19 +11,28 @@ class BillFeature(ManageBill):
                 name = customer_name_validate(input("Enter the customer name : "))
                 if(not name):
                     raise Exception("Enter a valid customer name ")
+                    
 
                 modile_no = valide_phone_no(input("Enter modile number : "))
                 if(not modile_no):
                     raise Exception("Enter a valid mobile no")
                 
-                table_number = input("Enter table")
-                if
+                table_number = table_number_validate(input("Enter table  no "))
+                if(not table_number):
+                    raise Exception("Enter a valid table number")
                 
-
-
+                if(table_number not in self.): # not implement
+                    print("Menu not available")
+                    continue 
+                
+                
                 item = validate_item(input("Enter the item name : "))
                 if(not item):
                     raise Exception("Enter a valid item")
+                
+                if(item not in self.Menu): # not implement
+                    print("Menu not available")
+                    continue 
                 
                 quantity = quantity_validate(input("Enter the quantity of the item : "))
                 if(not quantity):
@@ -48,6 +58,10 @@ class BillFeature(ManageBill):
                 if(not item):
                     raise Exception("Enter a valid item")
                 
+                if(item not in self.Menu): # not implement
+                    print("Menu not available")
+                    continue 
+
                 quantity = quantity_validate(input("Enter a valid quantity"))
                 if(not quantity):
                     raise Exception("Enter the quantity of the item : ")

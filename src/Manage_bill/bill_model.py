@@ -9,6 +9,7 @@ class BillModel:
             quantity,
             table_number,
             price,
+            total_amount,
             date_time
     ):
         self.bill_id = bill_id
@@ -18,6 +19,7 @@ class BillModel:
         self.quantity = quantity
         self.table_number = table_number
         self.price = price
+        self.total_amount = total_amount
         self.date_time = date_time
 
     def __str__(self):
@@ -29,6 +31,7 @@ class BillModel:
             "quantity" : {self.quantity},
            " table_number" : {self.table_number},
             "price" : {self.price},
+            "total amount" : {self.total_amount},
             "date_time" : {self.date_time}
         }
     
