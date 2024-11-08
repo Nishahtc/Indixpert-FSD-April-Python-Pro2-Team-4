@@ -53,7 +53,7 @@
             "price": 205
         },
         {
-            "name": "Pasta Spicy Tomato / Classical Cheese",
+            "name": "Pasta Spicy Tomato",
             "price": 190
         },
         {
@@ -73,7 +73,7 @@
             "price": 210
         },
         {
-            "name": "Capsicum, Onion, Mushroom Pizza",
+            "name": "Capsicum, Onion",
             "price": 250
         },
         {
@@ -85,7 +85,7 @@
             "price": 250
         },
         {
-            "name": "Super Veggie Pizza (Double Cheese)",
+            "name": "Super Veggie Pizza",
             "price": 265
         }
     ],
@@ -151,7 +151,7 @@
             "price": 175
         },
         {
-            "name": "Fried Vegetables in Salt & Pepper",
+            "name": "Fried Vegetables ",
             "price": 190
         },
         {
@@ -181,11 +181,11 @@
             "price": 175
         },
         {
-            "name": "Mixed Veg. in Hot Garlic Sauce",
+            "name": "Mixed Veg",
             "price": 185
         },
         {
-            "name": "Shredded Potatoes in Hot Garlic Sauce",
+            "name": "Shredded Potatoes ",
             "price": 153
         }
     ],
@@ -215,6 +215,10 @@
         {
             "name": "Chilli Garlic Rice",
             "price": 165
+        },
+        {
+            "name": "egg rice",
+            "price": 80.0
         }
     ],
     "desserts": [

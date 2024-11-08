@@ -1,6 +1,6 @@
 import json
 import os
-from src.utility.validation import validate_meal_type,validate_index,validate_price
+from src.utility.validation import validate_index,validate_meal_type,validate_price
 
 DATABASE_FOLDER = "src/database"
 MENU_FILE_PATH = os.path.join(DATABASE_FOLDER, "menu.json")
