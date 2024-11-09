@@ -1,0 +1,44 @@
+[
+    {
+        "id": "c86b36",
+        "customer_name": "Dav",
+        "table_number": null,
+        "items": [
+            "Club Sandwich"
+        ],
+        "quantity": [
+            3
+        ],
+        "total_amount": 525,
+        "order_date": "2024-11-09 10:43:06",
+        "order_type": "take out"
+    },
+    {
+        "id": "f406fe",
+        "customer_name": "Hjk",
+        "table_number": 2,
+        "items": [
+            "Club Sandwich"
+        ],
+        "quantity": [
+            4
+        ],
+        "total_amount": 700,
+        "order_date": "2024-11-09 12:52:39",
+        "order_type": "eat in"
+    },
+    {
+        "id": "76fe66",
+        "customer_name": "rty",
+        "table_number": null,
+        "items": [
+            "Plain Sandwich"
+        ],
+        "quantity": [
+            4
+        ],
+        "total_amount": 700,
+        "order_date": "2024-11-09 13:47:39",
+        "order_type": "take out"
+    }
+]

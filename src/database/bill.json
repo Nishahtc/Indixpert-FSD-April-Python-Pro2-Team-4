@@ -1,0 +1,102 @@
+[
+    {
+        "bill_id": "4225ca",
+        "customer_name": "Dav",
+        "customer_phone_no": "9089786756",
+        "table_number": "Take Out",
+        "items": [
+            "Club Sandwich"
+        ],
+        "quantities": [
+            3
+        ],
+        "item_totals": [
+            525
+        ],
+        "total_amount": 525,
+        "order_type": "take out",
+        "payment_info": {
+            "customer_name": "Dav",
+            "amount": 525.0,
+            "method": "cash",
+            "mobile_number": "9089786756",
+            "order_id": "SO-001",
+            "added_on": "2024-11-09 10:43:31"
+        }
+    },
+    {
+        "bill_id": "33e8ab",
+        "customer_name": "Hjk",
+        "customer_phone_no": "9089786756",
+        "table_number": 2,
+        "items": [
+            "Club Sandwich"
+        ],
+        "quantities": [
+            4
+        ],
+        "item_totals": [
+            700
+        ],
+        "total_amount": 700,
+        "order_type": "eat in",
+        "payment_info": {
+            "customer_name": "Hjk",
+            "amount": 700.0,
+            "method": "cash",
+            "mobile_number": "9089786756",
+            "order_id": "SO-002",
+            "added_on": "2024-11-09 12:53:16"
+        }
+    },
+    {
+        "bill_id": "bc5864",
+        "customer_name": "Hjk",
+        "customer_phone_no": "908978675645",
+        "table_number": 2,
+        "items": [
+            "Club Sandwich"
+        ],
+        "quantities": [
+            4
+        ],
+        "item_totals": [
+            700
+        ],
+        "total_amount": 700,
+        "order_type": "eat in",
+        "payment_info": {
+            "customer_name": "Hjk",
+            "amount": 700.0,
+            "method": "cash",
+            "mobile_number": false,
+            "order_id": "SO-003",
+            "added_on": "2024-11-09 12:54:08"
+        }
+    },
+    {
+        "bill_id": "28628b",
+        "customer_name": "rty",
+        "customer_phone_no": "9089786756",
+        "table_number": "Take Out",
+        "items": [
+            "Plain Sandwich"
+        ],
+        "quantities": [
+            4
+        ],
+        "item_totals": [
+            700
+        ],
+        "total_amount": 700,
+        "order_type": "take out",
+        "payment_info": {
+            "customer_name": "rty",
+            "amount": 700.0,
+            "method": "cash",
+            "mobile_number": "9089786756",
+            "order_id": "SO-004",
+            "added_on": "2024-11-09 13:48:32"
+        }
+    }
+]
