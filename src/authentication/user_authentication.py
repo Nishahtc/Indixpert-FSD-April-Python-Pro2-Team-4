@@ -109,6 +109,8 @@ class RestaurantSystem:
             choice = input("Choose an option: ").strip()
             if choice == '1':
                 user = self.system.login()
+                if user:
+                    break
             elif choice == '2':
                 self.system.signup()
             elif choice == '3':
