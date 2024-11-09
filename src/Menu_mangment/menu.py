@@ -1,21 +1,22 @@
 import json
 import os
-from src.utility.validation import validate_index,validate_meal_type,validate_price
+from src.utility.validation import validate_index, validate_meal_type, validate_price
 
 DATABASE_FOLDER = "src/database"
 MENU_FILE_PATH = os.path.join(DATABASE_FOLDER, "menu.json")
 
 class MenuItem:
-    def __init__(self, name, price):
+    def __init__(self, name, full_price, half_price=None):
         self.name = name
-        self.price = price
+        self.full_price = full_price
+        self.half_price = half_price if half_price is not None else full_price / 2
 
     def __str__(self):
-        return f"{self.name}: {self.price:.2f}"
+        return f"{self.name}: ₹{self.full_price:.2f} (Half: ₹{self.half_price:.2f})"
 
     @classmethod
     def from_dict(cls, item_dict):
-        return cls(item_dict['name'], item_dict['price'])
+        return cls(item_dict['name'], item_dict['full_price'], item_dict.get('half_price'))
 
 class Menu:
     MEAL_TYPES = [
@@ -39,7 +40,6 @@ class Menu:
                 return {meal: [MenuItem.from_dict(item) for item in items] for meal, items in menu_data.items()}
             except (json.JSONDecodeError, FileNotFoundError):
                 print("Error loading menu. Initializing empty menu.")
-
         return {meal: [] for meal in self.MEAL_TYPES}
 
     def save_menu(self):
@@ -48,22 +48,22 @@ class Menu:
         print("Menu saved successfully.")  # Debugging print
 
     def view_menu(self):
-        print("\n" + "*" * 30 + " MENU " + "*" * 30)
+        print("\n===================  MENU  ====================")
         for meal_type, items in self.menu_data.items():
-            print(f"\n{'*' * 10}{meal_type.upper()}{'*' * 10}")
-            if not items:
-                print("  No items available.")
-            else:
-                print(f"\n{'S No.':<10}{'NAME':<30}{'PRICE':<10}")
+            if items:
+                print(f"\nCategory: {meal_type.capitalize()}")
                 print("-" * 50)
-                for index, item in enumerate(items):
-                    print(f"{index + 1:<10}{item.name:<30}{item.price:<10.2f}")
-        print("\n" + "*" * 60)
+                print(f"{'Name':<25} {'Half Price':<15} {'Full Price':<25}")
+                print("-" * 50)
+                for item in items:
+                    print(f"{item.name:<25} ₹{item.half_price:<15.2f} ₹{item.full_price:<25.2f}")
+            else:
+                print(f"{meal_type.capitalize()} menu is empty.")
 
     def add_item(self, meal_type, name, price_input):
         validate_meal_type(meal_type, self.MEAL_TYPES)
         price = validate_price(price_input)
-        new_item = MenuItem(name, price)
+        new_item = MenuItem(name, price, price / 2)  # Assuming half price is half of full price
         self.menu_data[meal_type].append(new_item)
         self.save_menu()
         return f"Added to {meal_type}: {new_item}"
@@ -83,7 +83,8 @@ class Menu:
         if name:
             item.name = name
         if price_input:
-            item.price = validate_price(price_input)
+            item.full_price = validate_price(price_input)
+            item.half_price = item.full_price / 2  # Update half price accordingly
         self.save_menu()
         return f"Updated item in {meal_type}: {item}"
 
