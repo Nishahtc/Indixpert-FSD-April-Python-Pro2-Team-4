@@ -2,305 +2,414 @@
     "breakfast": [
         {
             "name": "French Fries",
-            "price": 106
+            "full_price": 106,
+            "half_price": 53
         },
         {
             "name": "Chilli Cheese Toast",
-            "price": 115
+            "full_price": 115,
+            "half_price": 57.5
         },
         {
             "name": "Chilli Cheese Garlic Toast",
-            "price": 115
+            "full_price": 115,
+            "half_price": 57.5
         },
         {
             "name": "Garlic Bread",
-            "price": 98
+            "full_price": 98,
+            "half_price": 49
         },
         {
             "name": "Garlic Bread with Cheese",
-            "price": 119
+            "full_price": 119,
+            "half_price": 59.5
         }
     ],
     "lunch": [
         {
             "name": "Plain Sandwich",
-            "price": 175
+            "full_price": 175,
+            "half_price": 87.5
         },
         {
             "name": "Grilled Sandwich",
-            "price": 175
+            "full_price": 175,
+            "half_price": 87.5
         },
         {
             "name": "Club Sandwich",
-            "price": 175
+            "full_price": 175,
+            "half_price": 87.5
         },
         {
             "name": "Russian Salad / Macaroni",
-            "price": 119
+            "full_price": 119,
+            "half_price": 59.5
         },
         {
             "name": "Veg. Burger",
-            "price": 72
+            "full_price": 72,
+            "half_price": 36
         }
     ],
     "dinner": [
         {
             "name": "Macaroni Hotpot",
-            "price": 205
+            "full_price": 205,
+            "half_price": 102.5
         },
         {
             "name": "Veg. Augratin",
-            "price": 205
+            "full_price": 205,
+            "half_price": 102.5
         },
         {
             "name": "Pasta Spicy Tomato",
-            "price": 190
+            "full_price": 190,
+            "half_price": 95
         },
         {
             "name": "Pasta in Twin Sauce",
-            "price": 190
+            "full_price": 190,
+            "half_price": 95
         },
         {
             "name": "Plain Cheese Pizza",
-            "price": 190
+            "full_price": 190,
+            "half_price": 95
         },
         {
             "name": "Capsicum, Onion Pizza",
-            "price": 210
+            "full_price": 210,
+            "half_price": 105
         },
         {
             "name": "Tomato, Onion Pizza",
-            "price": 210
+            "full_price": 210,
+            "half_price": 105
         },
         {
             "name": "Capsicum, Onion",
-            "price": 250
+            "full_price": 250,
+            "half_price": 125
         },
         {
             "name": "Jain Special Pizza",
-            "price": 250
+            "full_price": 250,
+            "half_price": 125
         },
         {
             "name": "Tandoori Pizza",
-            "price": 250
+            "full_price": 250,
+            "half_price": 125
         },
         {
             "name": "Super Veggie Pizza",
-            "price": 265
+            "full_price": 265,
+            "half_price": 132.5
         }
     ],
     "snacks": [
         {
             "name": "Cheese Topping",
-            "price": 55
+            "full_price": 55,
+            "half_price": 27.5
         },
         {
             "name": "Lasagna Roll",
-            "price": 133
+            "full_price": 133,
+            "half_price": 66.5
         },
         {
             "name": "Paneer Salsa Wrap",
-            "price": 133
+            "full_price": 133,
+            "half_price": 66.5
         },
         {
             "name": "Lebanese Falafel",
-            "price": 133
+            "full_price": 133,
+            "half_price": 66.5
         }
     ],
     "soups": [
         {
             "name": "Hot & Sour",
-            "price": 109
+            "full_price": 109,
+            "half_price": 54.5
         },
         {
             "name": "Lemon & Coriander",
-            "price": 109
+            "full_price": 109,
+            "half_price": 54.5
         },
         {
             "name": "Veg. Noodle Soup",
-            "price": 109
+            "full_price": 109,
+            "half_price": 54.5
         },
         {
             "name": "Sweet Corn",
-            "price": 109
+            "full_price": 109,
+            "half_price": 54.5
         },
         {
             "name": "Veg. Manchow",
-            "price": 109
+            "full_price": 109,
+            "half_price": 54.5
         },
         {
             "name": "Veg. Clear Soup",
-            "price": 109
+            "full_price": 109,
+            "half_price": 54.5
         }
     ],
     "starters": [
         {
             "name": "Spring Roll",
-            "price": 145
+            "full_price": 145,
+            "half_price": 72.5
         },
         {
             "name": "Chilly Paneer Dry",
-            "price": 195
+            "full_price": 195,
+            "half_price": 97.5
         },
         {
             "name": "Veg. Manchurian Dry",
-            "price": 153
+            "full_price": 153,
+            "half_price": 76.5
         },
         {
             "name": "Potatoes in Honey & Chilly",
-            "price": 175
+            "full_price": 175,
+            "half_price": 87.5
         },
         {
-            "name": "Fried Vegetables ",
-            "price": 190
+            "name": "Fried Vegetables",
+            "full_price": 190,
+            "half_price": 95
         },
         {
             "name": "Crispy Spinach & Baby Corn",
-            "price": 198
+            "full_price": 198,
+            "half_price": 99
         },
         {
             "name": "Chilly Mushroom Dry",
-            "price": 193
+            "full_price": 193,
+            "half_price": 96.5
         }
     ],
     "main_course": [
         {
             "name": "Veg Chopsuey",
-            "price": 195
+            "full_price": 195,
+            "half_price": 97.5
         },
         {
             "name": "Chilly Paneer Gravy",
-            "price": 205
+            "full_price": 205,
+            "half_price": 102.5
         },
         {
             "name": "Manchurian Gravy",
-            "price": 175
+            "full_price": 175,
+            "half_price": 87.5
         },
         {
             "name": "Sweet & Sour Veg.",
-            "price": 175
+            "full_price": 175,
+            "half_price": 87.5
         },
         {
             "name": "Mixed Veg",
-            "price": 185
+            "full_price": 185,
+            "half_price": 92.5
         },
         {
-            "name": "Shredded Potatoes ",
-            "price": 153
+            "name": "Shredded Potatoes",
+            "full_price": 153,
+            "half_price": 76.5
         }
     ],
     "noodles": [
         {
             "name": "Veg Hakka Noodles",
-            "price": 145
+            "full_price": 145,
+            "half_price": 72.5
         },
         {
             "name": "Chilli Garlic Noodles",
-            "price": 145
+            "full_price": 145,
+            "half_price": 72.5
         },
         {
             "name": "Pan Fried Noodles",
-            "price": 225
+            "full_price": 225,
+            "half_price": 112.5
         },
         {
             "name": "Gravy Noodles",
-            "price": 225
+            "full_price": 225,
+            "half_price": 112.5
         }
     ],
     "rice": [
         {
             "name": "Veg. Fried Rice",
-            "price": 165
+            "full_price": 165,
+            "half_price": 82.5
         },
         {
             "name": "Chilli Garlic Rice",
-            "price": 165
+            "full_price": 165,
+            "half_price": 82.5
         },
         {
-            "name": "egg rice",
-            "price": 80.0
+            "name": "Egg Rice",
+            "full_price": 80,
+            "half_price": 40
         }
     ],
     "desserts": [
         {
             "name": "Gulab Jamun",
-            "price": 60
+            "full_price": 60,
+            "half_price": 30
         },
         {
             "name": "Halwa (Seasonal)",
-            "price": 60
+            "full_price": 60,
+            "half_price": 30
         },
         {
             "name": "Rasgulle",
-            "price": 80.0
+            "full_price": 80,
+            "half_price": 40
         }
     ],
     "tea_and_coffee": [
         {
             "name": "Tea",
-            "price": 40
+            "full_price": 40,
+            "half_price": 20
         },
         {
             "name": "Coffee Mocachino",
-            "price": 51
+            "full_price": 51,
+            "half_price": 25.5
         },
         {
             "name": "Coffee Americano (Black)",
-            "price": 55
+            "full_price": 55,
+            "half_price": 27.5
         },
         {
             "name": "Coffee Espresso",
-            "price": 60
+            "full_price": 60,
+            "half_price": 30
         },
         {
             "name": "Ice Tea (Lemon)",
-            "price": 51
+            "full_price": 51,
+            "half_price": 25.5
         },
         {
             "name": "Coffee Cappuccino",
-            "price": 51
+            "full_price": 51,
+            "half_price": 25.5
         },
         {
             "name": "Espresso (Black)",
-            "price": 55
+            "full_price": 55,
+            "half_price": 27.5
         },
         {
             "name": "Cold-Coffee (Frappe)",
-            "price": 70
+            "full_price": 70,
+            "half_price": 35
         },
         {
-            "name": "black tea",
-            "price": 80.0
+            "name": "Black Tea",
+            "full_price": 80,
+            "half_price": 40
         }
     ],
     "ice_cream": [
         {
             "name": "Vanilla/Strawberry",
-            "price": 51
+            "full_price": 51,
+            "half_price": 25.5
         },
         {
             "name": "Tutti Fruti",
-            "price": 60
+            "full_price": 60,
+            "half_price": 30
         },
         {
             "name": "Pineapple",
-            "price": 60
+            "full_price": 60,
+            "half_price": 30
         },
         {
             "name": "Chocolate",
-            "price": 60
+            "full_price": 60,
+            "half_price": 30
         },
         {
             "name": "Butter Scotch",
-            "price": 60
+            "full_price": 60,
+            "half_price": 30
         },
         {
             "name": "Kaju Kishmish",
-            "price": 60
+            "full_price": 60,
+            "half_price": 30
         },
         {
             "name": "Vanilla Chocochips",
-            "price": 60
+            "full_price": 60,
+            "half_price": 30
+        }
+    ],
+    "drinks": [
+        {
+            "name": "Coca-Cola",
+            "full_price": 45
+        },
+        {
+            "name": "Sprite",
+            "full_price": 45
+        },
+        {
+            "name": "Pepsi",
+            "full_price": 45
+        },
+        {
+            "name": "Fanta",
+            "full_price": 45
+        },
+        {
+            "name": "Orange Juice",
+            "full_price": 75
+        },
+        {
+            "name": "Apple Juice",
+            "full_price": 75
+        },
+        {
+            "name": "Pineapple Juice",
+            "full_price": 75
+        },
+        {
+            "name": "Mango Juice",
+            "full_price": 75
+        },
+        {
+            "name": "Water",
+            "full_price": 40,
+            "half_price": 20
         }
     ]
 }
