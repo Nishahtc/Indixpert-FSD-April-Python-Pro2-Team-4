@@ -101,7 +101,7 @@ class RestaurantSystem:
 
     def display_menu(self):
         user = None
-        while user is None:
+        while True:
             print("\n***** Welcome to the System *****")
             print("1. Login")
             print("2. Sign up")
@@ -113,12 +113,14 @@ class RestaurantSystem:
                 self.system.signup()
             elif choice == '3':
                 print("Exiting the system.")
+                break
             else:
                 print("Invalid choice. Please try again.")
 
-        if user['role'] == 'admin':
-            admin_dashboard = AdminDashboard(self.system, self.menu)
-            admin_dashboard.admin_actions()
-        elif user['role'] == 'staff':
-            staff_dashboard = StaffDashboard(self.menu, self.table_booking, self.order_feature, self.bill_dashboard)
-            staff_dashboard.staff_actions()
+        if user:
+            if user['role'] == 'admin':
+                admin_dashboard = AdminDashboard(self.system, self.menu)
+                admin_dashboard.admin_actions()
+            elif user['role'] == 'staff':
+                staff_dashboard = StaffDashboard(self.menu, self.table_booking, self.order_feature, self.bill_dashboard)
+                staff_dashboard.staff_actions()
