@@ -14,5 +14,13 @@
         "mobile_number": "9089786756",
         "order_id": "SO-002",
         "added_on": "2024-11-09 14:10:44"
+    },
+    {
+        "customer_name": "ert",
+        "amount": 875.0,
+        "method": "cash",
+        "mobile_number": "9089786756",
+        "order_id": "SO-003",
+        "added_on": "2024-11-09 14:28:32"
     }
 ]

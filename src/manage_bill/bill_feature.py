@@ -50,7 +50,10 @@ class BillFeature(ManageBill):
             print("Bill created and payment processed successfully.")
             
             if orders_for_billing[0].order_type == "eat in":
-                self.order_feature.table_booking_system.cancel_booking(orders_for_billing[0].table_number)
+                # self.order_feature.table_booking_system.cancel_booking(orders_for_billing[0].table_number)
+                table_number = orders_for_billing[0].table_number
+                self.order_feature.table_booking_system.cancel_booking(table_number)
+                self.order_feature.table_booking_system.save_bookings()
         
         except ValueError as error:
             print(f"Error: {error}")

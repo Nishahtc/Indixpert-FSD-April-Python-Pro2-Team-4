@@ -48,5 +48,30 @@
             "order_id": "SO-002",
             "added_on": "2024-11-09 14:10:44"
         }
+    },
+    {
+        "bill_id": "574647",
+        "customer_name": "ert",
+        "customer_phone_no": "9089786756",
+        "table_number": 2,
+        "items": [
+            "Grilled Sandwich"
+        ],
+        "quantities": [
+            5
+        ],
+        "item_totals": [
+            875
+        ],
+        "total_amount": 875,
+        "order_type": "eat in",
+        "payment_info": {
+            "customer_name": "ert",
+            "amount": 875.0,
+            "method": "cash",
+            "mobile_number": "9089786756",
+            "order_id": "SO-003",
+            "added_on": "2024-11-09 14:28:32"
+        }
     }
 ]
