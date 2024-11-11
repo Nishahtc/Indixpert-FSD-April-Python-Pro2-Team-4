@@ -73,11 +73,16 @@ class Menu:
                     print(f"{index:<5}{item.name:<25}{full_price:>10}{half_price:>10}")
         print(border)
     
-    def get_item_price(self, item_name):
+    def get_item_price(self, item_name, portion_size):
         for meal_type, items in self.menu_data.items():
             for item in items:
                 if item.name.lower() == item_name.lower():
-                    return item.price
+                    if portion_size == 'full':
+                        return item.full_price
+                    elif portion_size == 'half' and item.half_price is not None:
+                        return item.half_price
+                    else:
+                        return None
         return None
 
     def add_item(self, meal_type, name, full_price, half_price):
