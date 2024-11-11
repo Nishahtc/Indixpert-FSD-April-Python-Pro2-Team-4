@@ -1,6 +1,7 @@
 import uuid
 from src.manage_bill.bill_model import BillModel
 from src.manage_bill.bill import Bill
+from src.utility.messages import Messages
 
 class ManageBill(Bill):
     def create_bill(self, customer_name, customer_phone_no, table_number, items, quantities, item_totals, total_amount, order_type=None, payment_info=None):
@@ -19,7 +20,7 @@ class ManageBill(Bill):
         )
         self.bills.append(new_bill)
         self.save_bills()
-        print("Bill created successfully with payment details.")
+        Messages.bill_created_successfully_with_payment()
 
     def update_bill(self, bill_id, items, quantities, prices):
         for bill in self.bills:
@@ -29,32 +30,32 @@ class ManageBill(Bill):
                 bill.prices = prices
                 bill.total_amount = sum(qty * price for qty, price in zip(quantities, prices))
                 self.save_bills()
-                print("Bill updated successfully.")
+                Messages.bill_updated_successfully()
                 return
-        print("Bill not found with the given ID.")
+        Messages.bill_not_found(bill_id)
 
     def delete(self, bill_id):
         for bill in self.bills:
             if bill.bill_id == bill_id:
                 self.bills.remove(bill)
                 self.save_bills()
-                print("Bill deleted successfully.")
+                Messages.bill_deleted_successfully()
                 return
-        print("Bill not found with the given ID.")
+        Messages.bill_not_found(bill_id)
 
     def get_bill(self, bill_id):
         for bill in self.bills:
             if bill.bill_id == bill_id:
                 print(bill)
                 return
-        print("Bill not found with the given ID.")
+        Messages.bill_not_found(bill_id)
 
     def get_all_bills(self):
         if self.bills:
-            print("\n" + "=" * 30 + "\n      All Restaurant Bills\n" + "=" * 30)
+            Messages.display_all_bills()
             for bill in self.bills:
                 print(bill)
-                print("\n" + "=" * 30)
+                Messages.separator()
         else:
-            print("No bills found.")
+            Messages.no_bills_found()
             

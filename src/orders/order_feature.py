@@ -5,6 +5,8 @@ from src.orders.order_model import OrderModel
 from src.utility.validations import customer_name_validate, table_number_validate
 from src.menu.menu import Menu
 from src.booking.table_booking import TableBookingSystem
+from src.utility.messages import Messages
+
 
 class OrderFeature(ManageOrder):
     def __init__(self):
@@ -14,123 +16,124 @@ class OrderFeature(ManageOrder):
 
     def order(self):
         try:
-            customer_name = customer_name_validate(input("Enter customer name: "))
+            customer_name = customer_name_validate(input(Messages.enter_customer_name()))
             if not customer_name:
-                raise ValueError("Invalid customer name.")
+                raise ValueError(Messages.invalid_customer_name())
 
-            order_type = input("Is this order 'Eat In' or 'Take Out'? ").strip().lower()
+            order_type = input(Messages.enter_order_type()).strip().lower()
             if order_type not in ("eat in", "take out"):
-                raise ValueError("Invalid order type. Please enter 'Eat In' or 'Take Out'.")
+                raise ValueError(Messages.invalid_order_type())
 
-            items = input("Enter items (comma-separated): ").split(',')
+            items = input(Messages.enter_items()).split(',')
             items = [item.strip() for item in items]
 
             total_amount = 0
             quantities = []
             for item in items:
-                quantity = int(input(f"Enter quantity for {item}: "))
-                price = self.menu.get_item_price(item)
+                quantity = int(input(Messages.enter_quantity_for_item(item)))
+                portion_size = input(Messages.enter_portion_size()).strip().lower()
+                if portion_size not in ['full', 'half']:
+                    Messages.invalid_choice()
+                    continue
+                price = self.menu.get_item_price(item, portion_size)
                 if price is None:
-                    print(f"Item '{item}' not found in menu.")
+                    Messages.item_not_found(item)
                     continue
                 quantities.append(quantity)
                 total_amount += price * quantity
 
             table_number = None
-            
+
             if order_type == "eat in":
-                table_number = table_number_validate(input("Enter table number: "))
+                table_number = table_number_validate(input(Messages.enter_table_number()))
                 if not table_number:
-                    raise ValueError("Invalid table number.")
-                
-                seats_required = int(input("Enter the number of seats required: "))
+                    raise ValueError(Messages.invalid_table_number())
+
+                seats_required = int(input(Messages.enter_seats_required()))
                 self.table_booking_system.book_table(table_number, customer_name, seats_required)
-                
+
             self.add_order(customer_name, table_number, items, quantities, total_amount, order_type)
         except ValueError as error:
-            print(error)
+            Messages.error_message(error)
 
     def add_order(self, customer_name, table_number, items, quantity, total_amount, order_type):
         order_id = str(uuid.uuid4())[:6]
         order_date = datetime.now()
-        
+
         if order_type == "take out":
             table_number = None
-        
+
         new_order = OrderModel(order_id, customer_name, table_number, items, quantity, total_amount, order_date, order_type)
         self.orders.append(new_order)
         self.save_order()
-        print("Order added successfully.")
+        Messages.order_added_successfully()
 
     def update_item(self):
         try:
-            table_number = table_number_validate(input("Enter table number to update order: "))
+            table_number = table_number_validate(input(Messages.enter_table_number_to_update()))
             if not table_number:
-                raise ValueError("Invalid table number.")
+                raise ValueError(Messages.invalid_table_number())
 
-            customer_name = customer_name_validate(input("Enter customer name: "))
-            items = input("Enter items (comma-separated): ").split(',')
+            customer_name = customer_name_validate(input(Messages.enter_customer_name()))
+            items = input(Messages.enter_items()).split(',')
             items = [item.strip() for item in items]
-            
+
             total_amount = 0
             quantities = []
             for item in items:
-                quantity = int(input(f"Enter quantity for {item}: "))
-                price = self.menu.get_item_price(item)
+                quantity = int(input(Messages.enter_quantity_for_item(item)))
+                portion_size = input(Messages.enter_portion_size()).strip().lower()
+                if portion_size not in ['full', 'half']:
+                    Messages.invalid_choice()
+                    continue
+                price = self.menu.get_item_price(item, portion_size)
                 if price is None:
-                    print(f"Item '{item}' not found in menu.")
+                    Messages.item_not_found(item)
                     continue
                 quantities.append(quantity)
                 total_amount += price * quantity
 
             self.update_order(table_number, customer_name, items, quantities, total_amount)
         except ValueError as error:
-            print(error)
+            Messages.error_message(error)
 
     def cancel_item(self):
         try:
-            table_number = table_number_validate(input("Enter table number to cancel order: "))
+            table_number = table_number_validate(input(Messages.enter_table_number_to_cancel()))
             if not table_number:
-                raise ValueError("Invalid table number.")
+                raise ValueError(Messages.invalid_table_number())
             self.cancel_order(table_number)
         except ValueError as error:
-            print(error)
+            Messages.error_message(error)
 
     def search_order_by_table(self):
         try:
-            table_number = table_number_validate(input("Enter table number to search for orders: "))
+            table_number = table_number_validate(input(Messages.enter_table_number_to_search()))
             if not table_number:
-                raise ValueError("Invalid table number.")
-            
+                raise ValueError(Messages.invalid_table_number())
+
             found_orders = [order for order in self.orders if order.table_number == table_number]
             if found_orders:
-                print(f"\nOrders for Table {table_number}:")
+                Messages.orders_for_table(table_number)
                 for order in found_orders:
                     print(order)
             else:
-                print(f"No orders found for Table {table_number}.")
+                Messages.no_orders_found(table_number)
         except ValueError as error:
-            print(error)
+            Messages.error_message(error)
 
     def search_all_orders(self):
         if self.orders:
-            print("\nAll Orders:")
+            Messages.all_orders()
             for order in self.orders:
                 print(order)
         else:
-            print("No orders found.")
-            
+            Messages.no_orders_found()
+
     def manage_orders(self):
         while True:
-            print("\n--- Order Management ---")
-            print("1. Add Order")
-            print("2. Update Order")
-            print("3. Cancel Order")
-            print("4. Search Order by Table Number")
-            print("5. View All Orders")
-            print("6. Go Back to Dashboard")
-
-            choice = input("Enter your choice: ")
+            Messages.order_management_menu()
+            choice = input(Messages.enter_choice())
 
             if choice == '1':
                 self.order()
@@ -145,16 +148,16 @@ class OrderFeature(ManageOrder):
                 self.search_all_orders()
                 self.prompt_return_to_dashboard()
             elif choice == '6':
-                print("Returning to the main dashboard.")
+                Messages.returning_to_dashboard()
                 break
             else:
-                print("Invalid choice. Please try again.")
+                Messages.invalid_choice()
 
     def prompt_return_to_dashboard(self):
         while True:
-            print("\nEnter 'b' to go back to the main dashboard.")
-            user_input = input("Enter choice: ").strip().lower()
+            Messages.prompt_return()
+            user_input = input(Messages.enter_choice()).strip().lower()
             if user_input == 'b':
                 break
             else:
-                print("Invalid input. Please enter 'b' to go back.")
+                Messages.invalid_input_b()

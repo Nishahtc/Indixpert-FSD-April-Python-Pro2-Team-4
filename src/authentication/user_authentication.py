@@ -8,6 +8,7 @@ from src.orders.order_feature import OrderFeature
 from src.manage_bill.bill_feature import BillFeature
 from src.booking.table_booking import TableBookingSystem
 from src.dashboard.bill_dashboard import BillDashboard
+from src.utility.messages import Messages
 
 USER_FILE_PATH = "src/database/user.json"
 
@@ -30,16 +31,17 @@ class System:
         password = input("Enter password: ")
         for user in self.users:
             if user['username'] == username and user['password'] == password:
-                print(f"Welcome back, {username}!")
+                Messages.welcome_back(username)
                 return user
-        print("Invalid credentials.")
+        Messages.invalid_credentials()
         return None
 
     def signup(self):
         username = input("Enter username: ")
         password = input("Enter password: ")
         if is_username_taken(self.users, username):
-            print("Username already exists. Try a different one.")
+            Messages.username_exists()
+            return
 
         role = 'admin' if not admin_check(self.users) else 'staff'
         new_user = {
@@ -51,16 +53,12 @@ class System:
         }
         self.users.append(new_user)
         self.save_users()
-        print(f"User {username} signed up successfully as {role}.")
+        Messages.signup_success(username, role)
 
     def manage_users(self):
         while True:
-            print("\n--- Manage Users ---")
-            print("1. View All Users")
-            print("2. Add New User")
-            print("3. Delete User")
-            print("4. Back to Admin Menu")
-            choice = input("Choose an option: ").strip()
+            Messages.manage_users_menu()
+            choice = input(Messages.choose_option()).strip()
 
             if choice == '1':
                 self.view_users()
@@ -71,24 +69,25 @@ class System:
             elif choice == '4':
                 break
             else:
-                print("Invalid choice. Please try again.")
+                Messages.invalid_choice()
 
     def view_users(self):
         if self.users:
-            print("\nRegistered Users:")
+            Messages.registered_users()
             for user in self.users:
-                print(f"Username: {user['username']}, Role: {user['role']}")
+                Messages.user_details(user['username'], user['role'])
         else:
-            print("No registered users found.")
+            Messages.no_users()
 
     def delete_user(self):
-        username = input("Enter the username of the user to delete: ").strip()
+        username = input(Messages.enter_username_to_delete()).strip()
         for user in self.users:
             if user['username'] == username:
                 self.users.remove(user)
                 self.save_users()
-                print(f"User '{username}' deleted successfully.")
-        print(f"User '{username}' not found.")
+                Messages.user_deleted(username)
+                return
+        Messages.user_not_found(username)
 
 class RestaurantSystem:
     def __init__(self):
@@ -102,11 +101,8 @@ class RestaurantSystem:
     def display_menu(self):
         user = None
         while True:
-            print("\n***** Welcome to the System *****")
-            print("1. Login")
-            print("2. Sign up")
-            print("3. Exit")
-            choice = input("Choose an option: ").strip()
+            Messages.welcome_system()
+            choice = input(Messages.choose_option()).strip()
             if choice == '1':
                 user = self.system.login()
                 if user:
@@ -114,10 +110,10 @@ class RestaurantSystem:
             elif choice == '2':
                 self.system.signup()
             elif choice == '3':
-                print("Exiting the system.")
+                Messages.exit_system()
                 break
             else:
-                print("Invalid choice. Please try again.")
+                Messages.invalid_choice()
 
         if user:
             if user['role'] == 'admin':

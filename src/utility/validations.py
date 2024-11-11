@@ -11,10 +11,10 @@ def customer_name_validate(name):
         return name.lower()
     return False
 
-def menu(meal_type):
+def validate_meal_type(meal_type):
     pattern = r"^[A-Za-z\s]+$"
     if re.match(pattern, meal_type):
-        return menu.lower()
+        return meal_type.strip().lower().replace(" ", "_")
     return False
 
 def table_number_validate(table_number):

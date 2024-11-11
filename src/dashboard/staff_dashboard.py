@@ -1,4 +1,5 @@
 from src.dashboard.bill_dashboard import BillDashboard
+from src.utility.messages import Messages
 
 class StaffDashboard:
     def __init__(self, menu_dashboard, booking_dashboard, order_dashboard, bill_dashboard: BillDashboard):
@@ -9,14 +10,9 @@ class StaffDashboard:
 
     def staff_actions(self):
         while True:
-            print("\n***** Staff Menu *****")
-            print("1. Manage Menu")
-            print("2. Manage Table Bookings")
-            print("3. Manage Orders")
-            print("4. Manage Bills")
-            print("5. Logout")
+            Messages.staff_menu()
 
-            choice = input("Select an option: ")
+            choice = input(Messages.select_option())
             if choice == '1':
                 self.menu_dashboard.manage_menu()
             elif choice == '2':
@@ -26,7 +22,7 @@ class StaffDashboard:
             elif choice == '4':
                 self.bill_dashboard.manage_bills()
             elif choice == '5':
-                print("Logging out.")
+                Messages.logging_out()
                 break
             else:
-                print("Invalid choice. Please try again.")
+                Messages.invalid_choice()
