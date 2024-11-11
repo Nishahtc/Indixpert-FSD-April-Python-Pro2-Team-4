@@ -383,48 +383,82 @@ class Messages:
     #menu start
     
     @staticmethod
+    @staticmethod
     def error_loading_menu():
-        print("Error loading menu. Starting with an empty menu.")
+        print("Error loading menu data.")
 
     @staticmethod
-    def display_menu():
-        print("\n--- MENU ---")
-
-    @staticmethod
-    def display_meal_type(meal_type):
-        print(f"\n{meal_type.upper()}:")
-
-    @staticmethod
-    def no_items_available():
-        print("  No items available.")
-
-    @staticmethod
-    def display_menu_item(index, item):
-        print(f"  {index}. {item}")
-
-    @staticmethod
-    def invalid_meal_type(meal_type):
-        print(f"Invalid meal type: {meal_type}.")
+    def invalid_meal_type(meal_type=None):
+        print(f"Invalid meal type: {meal_type if meal_type else ''}")
 
     @staticmethod
     def invalid_item_name():
         print("Invalid item name.")
 
     @staticmethod
+    def duplicate_item(name, meal_type):
+        print(f"Item '{name}' already exists in {meal_type}.")
+
+    @staticmethod
     def invalid_price():
-        print("Invalid price.")
+        print("Invalid price value.")
 
     @staticmethod
     def item_added(meal_type, item):
-        print(f"Added to {meal_type}: {item}")
+        print(f"Added {item} to {meal_type}.")
+
+    @staticmethod
+    def item_removed(meal_type, item):
+        print(f"Removed {item} from {meal_type}.")
 
     @staticmethod
     def invalid_index_or_meal_type():
         print("Invalid index or meal type.")
+    
+    @staticmethod
+    def item_already_exists(name):
+        print(f"Error: Item '{name}' already exists on the menu.")
+    
+    @staticmethod
+    def invalid_index():
+        print("Invalid index.")
 
     @staticmethod
-    def item_removed(meal_type, item):
-        print(f"Removed from {meal_type}: {item}")
+    def returning_to_dashboard():
+        print("Returning to dashboard.")
+
+    @staticmethod
+    def menu_management_menu():
+        print("\n1. View Menu\n2. Add Item\n3. Remove Item\n4. Return to Dashboard")
+
+    @staticmethod
+    def enter_choice():
+        return "Enter your choice: "
+
+    @staticmethod
+    def enter_meal_type():
+        return "Enter meal type: "
+
+    @staticmethod
+    def enter_item_name():
+        return "Enter item name: "
+
+    @staticmethod
+    def enter_item_price():
+        return "Enter item full price: "
+
+    @staticmethod
+    def prompt_return():
+        print("Press 'B' to go back to dashboard.")
+
+    @staticmethod
+    def invalid_input_b():
+        print("Invalid input. Press 'B' to return.")
+
+    @staticmethod
+    def error_message(error):
+        print(f"An error occurred: {error}")
+
 
     @staticmethod
     def menu_management_menu():

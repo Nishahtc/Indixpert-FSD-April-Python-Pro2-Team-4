@@ -14,9 +14,9 @@ class MenuItem:
 
     def __str__(self):
         if self.half_price is not None:
-            return f"{self.name}: Full Price - {self.full_price:.2f}, Half Price - {self.half_price:.2f}"
+            return f"{self.name}: Full Price - {self.full_price}, Half Price - {self.half_price}"
         else:
-            return f"{self.name}: Full Price - {self.full_price:.2f}"
+            return f"{self.name}: Full Price - {self.full_price}"
 
     @classmethod
     def from_dict(cls, item_dict):
@@ -46,6 +46,7 @@ class Menu:
                     return {meal: [MenuItem.from_dict(item) for item in items] for meal, items in menu_data.items()}
                 except json.JSONDecodeError:
                     Messages.error_loading_menu()
+                    print(f"Error: Menu file '{self.file}' is corrupted. Loading empty menu.")
         return {meal: [] for meal in self.MEAL_TYPES}
 
     def save_menu(self):
@@ -68,21 +69,19 @@ class Menu:
                 print(f"{'S.No':<5}{'Item Name':<25}{'Full Price':>10}  {'Half Price':>10}")
                 print("-" * 55)
                 for index, item in enumerate(items, start=1):
-                    full_price = f"{item.full_price:.2f}"
-                    half_price = f"{item.half_price:.2f}" if item.half_price is not None else "N/A"
+                    full_price = f"{item.full_price}"
+                    half_price = f"{item.half_price}" if item.half_price is not None else "N/A"
                     print(f"{index:<5}{item.name:<25}{full_price:>10}{half_price:>10}")
         print(border)
     
     def get_item_price(self, item_name, portion_size):
-        for meal_type, items in self.menu_data.items():
+        for items in self.menu_data.values():
             for item in items:
                 if item.name.lower() == item_name.lower():
                     if portion_size == 'full':
                         return item.full_price
                     elif portion_size == 'half' and item.half_price is not None:
                         return item.half_price
-                    else:
-                        return None
         return None
 
     def add_item(self, meal_type, name, full_price, half_price):
@@ -92,9 +91,16 @@ class Menu:
         if not validate_item(name):
             Messages.invalid_item_name()
             return
+        
+        
+        if any(item.name.lower() == name.lower() for item in self.menu_data[meal_type]):
+            Messages.item_already_exists(name)
+            return
+        
         full_price = validate_price(full_price)
-        half_price = validate_price(half_price)
-        if not full_price or not half_price:
+        half_price = validate_price(half_price) if half_price else None
+
+        if not full_price:
             Messages.invalid_price()
             return
 
@@ -112,6 +118,10 @@ class Menu:
         self.save_menu()
         Messages.item_removed(meal_type, removed_item)
 
+    def search_meal_type(self, initial):
+        initial = initial.lower()
+        return [meal for meal in self.MEAL_TYPES if meal.startswith(initial)]
+
     def manage_menu(self):
         try:
             while True:
@@ -123,30 +133,33 @@ class Menu:
                     self.view_menu()
                     self.prompt_return_to_dashboard()
                 elif choice == '2':
+                    search = input("Enter meal type initial: ").strip().lower()
+                    matching_meals = self.search_meal_type(search)
+
+                    if not matching_meals:
+                        print(f"No meal types found starting with '{search}'")
+                        continue
+                    
+                    print(f"Matching meal types: {', '.join(matching_meals)}")
                     meal_type = validate_meal_type(input(Messages.enter_meal_type()))
-                    if not meal_type or meal_type not in self.MEAL_TYPES:
-                        Messages.invalid_meal_type("Invalid meal type")
+                    if not meal_type:
+                        Messages.invalid_meal_type()
                         continue
-                    
+
                     name = input(Messages.enter_item_name()).strip()
-                    full_price = input(Messages.enter_item_price()).strip()
-                    half_price = input("Enter half price (or press Enter if not applicable): ").strip() or None
-                    
-                    if half_price is not None:
-                        half_price = validate_price(half_price)
-                        
-                    full_price = validate_price(full_price)
-                    
-                    if not full_price:
-                        Messages.invalid_price()
+                    full_price = int(input(Messages.enter_item_price()).strip())
+                    half_price = int(input("Enter half price : ").strip() or 0)
+
+                    self.add_item(meal_type, name, full_price, half_price)
+                elif choice == '3':
+                    search = input("Enter meal type initial: ").strip().lower()
+                    matching_meals = self.search_meal_type_by_initial(search)
+
+                    if not matching_meals:
+                        print(f"No meal types found starting with '{search}'")
                         continue
                     
-                    new_item = MenuItem(name, full_price, half_price)
-                    self.menu_data[meal_type].append(new_item)
-                    self.save_menu()
-                    Messages.item_added(meal_type, new_item)
-                    
-                elif choice == '3':
+                    print(f"Matching meal types: {', '.join(matching_meals)}")
                     meal_type = validate_meal_type(input(Messages.enter_meal_type()))
                     if not meal_type or meal_type not in self.MEAL_TYPES:
                         Messages.invalid_meal_type(meal_type)
@@ -154,7 +167,7 @@ class Menu:
                     
                     self.view_menu()
                     try:
-                        index = int(input("Enter item number to remove: ")) - 1
+                        index = int(input("Enter item number to remove: "))
                         self.remove_item(meal_type, index)
                     except ValueError:
                         Messages.invalid_index()
@@ -166,7 +179,6 @@ class Menu:
                     Messages.invalid_choice()
         except Exception as error:
             Messages.error_message(error)
-            
 
     def prompt_return_to_dashboard(self):
         while True:
@@ -176,4 +188,3 @@ class Menu:
                 break
             else:
                 Messages.invalid_input_b()
-                

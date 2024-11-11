@@ -43,12 +43,22 @@ def validate_quantity(quantity):
 
 def validate_price(price):
     try:
-        price = float(price)
+        price = int(price)
         if price > 0:
             return price
     except ValueError:
         return False
     return False
+
+def validate_meal_type(meal_type):
+    valid_meals = [
+        "breakfast", "lunch", "dinner", "snacks", 
+        "soups", "starters", "main_course", "noodles",
+        "rice", "desserts", "tea_and_coffee", "ice_cream"
+    ]
+    if meal_type in valid_meals:
+        return meal_type
+    return None
 
 def admin_check(users):
     for user in users:
