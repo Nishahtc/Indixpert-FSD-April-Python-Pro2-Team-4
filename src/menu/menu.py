@@ -53,20 +53,20 @@ class Menu:
             json.dump({meal: [item.__dict__ for item in items] for meal, items in self.menu_data.items()}, file, indent=4)
 
     def view_menu(self):
-        border = "=" * 50
+        border = "=" * 55
         print(border)
-        print(f"{'RESTAURANT MENU':^50}")
+        print(f"{'RESTAURANT MENU':^55}")
         print(border)
         
         for meal_type, items in self.menu_data.items():
-            print(f"\n{meal_type.upper():^50}")
-            print("-" * 50)
+            print(f"\n{meal_type.upper():^55}")
+            print("-" * 55)
             
             if not items:
-                print(f"{'No items available':^50}")
+                print(f"{'No items available':^55}")
             else:
-                print(f"{'S.No':<5}{'Item Name':<25}{'Full Price':>10}{'Half Price':>10}")
-                print("-" * 50)
+                print(f"{'S.No':<5}{'Item Name':<25}{'Full Price':>10}  {'Half Price':>10}")
+                print("-" * 55)
                 for index, item in enumerate(items, start=1):
                     full_price = f"{item.full_price:.2f}"
                     half_price = f"{item.half_price:.2f}" if item.half_price is not None else "N/A"

@@ -186,7 +186,7 @@
             "half_price": 87.5
         },
         {
-            "name": "Fried Vegetables in Salt & Pepper",
+            "name": "Fried Vegetables ",
             "full_price": 190,
             "half_price": 95.0
         },
@@ -223,12 +223,12 @@
             "half_price": 87.5
         },
         {
-            "name": "Mixed Veg in Hot Garlic Sauce",
+            "name": "Mixed Veg ",
             "full_price": 185,
             "half_price": 92.5
         },
         {
-            "name": "Shredded Potatoes in Hot Garlic Sauce",
+            "name": "Shredded Potatoes ",
             "full_price": 153,
             "half_price": 76.5
         }
