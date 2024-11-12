@@ -638,9 +638,9 @@ class Messages:
     
     # payments start
     
-    @staticmethod
-    def enter_payment_amount():
-        return "Enter payment amount: "
+    # @staticmethod
+    # def enter_payment_amount():
+    #     return "Enter payment amount: "
 
     @staticmethod
     def enter_payment_method():
