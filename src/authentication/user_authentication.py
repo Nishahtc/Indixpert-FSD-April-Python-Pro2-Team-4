@@ -9,6 +9,7 @@ from src.manage_bill.bill_feature import BillFeature
 from src.booking.table_booking import TableBookingSystem
 from src.dashboard.bill_dashboard import BillDashboard
 from src.utility.messages import Messages
+from getpass import getpass
 
 USER_FILE_PATH = "src/database/user.json"
 
@@ -28,7 +29,7 @@ class System:
 
     def login(self):
         username = input("Enter username: ").strip().lower()
-        password = input("Enter password: ").strip().lower()
+        password = getpass("Enter password: ").strip().lower()
         for user in self.users:
             if user['username'] == username and user['password'] == password:
                 Messages.welcome_back(username)
@@ -38,7 +39,7 @@ class System:
 
     def signup(self):
         username = input("Enter username: ").strip().lower()
-        password = input("Enter password: ").strip().lower()
+        password = getpass("Enter password: ").strip().lower()
         if is_username_taken(self.users, username):
             Messages.username_exists()
             return
