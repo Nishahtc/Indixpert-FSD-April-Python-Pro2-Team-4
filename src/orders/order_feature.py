@@ -50,6 +50,8 @@ class OrderFeature(ManageOrder):
                     raise ValueError(Messages.invalid_table_number())
                 
                 existing_booking = self.table_booking_system.tables.get(str(table_number))
+                self.table_booking_system.tables = self.table_booking_system.load_bookings()
+                existing_booking = self.table_booking_system.tables.get(str(table_number))
                 if existing_booking and existing_booking['customer']:
                     Messages.table_already_booked(table_number, existing_booking['customer'])
                     return
