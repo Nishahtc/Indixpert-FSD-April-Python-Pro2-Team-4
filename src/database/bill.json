@@ -1,1 +1,52 @@
-[]
+[
+    {
+        "bill_id": "f8d704",
+        "customer_name": "xyz",
+        "customer_phone_no": "9089786756",
+        "table_number": "Take Out",
+        "items": [
+            "Grilled Sandwich"
+        ],
+        "quantities": [
+            5
+        ],
+        "item_totals": [
+            175
+        ],
+        "total_amount": 875,
+        "order_type": "take out",
+        "payment_info": {
+            "customer_name": "xyz",
+            "amount": 875.0,
+            "method": "cash",
+            "mobile_number": "9089786756",
+            "order_id": "SO-001",
+            "added_on": "2024-11-12 11:52:52"
+        }
+    },
+    {
+        "bill_id": "29b2b8",
+        "customer_name": "abc",
+        "customer_phone_no": "9089786756",
+        "table_number": 1,
+        "items": [
+            "Grilled Sandwich"
+        ],
+        "quantities": [
+            5
+        ],
+        "item_totals": [
+            175
+        ],
+        "total_amount": 875,
+        "order_type": "eat in",
+        "payment_info": {
+            "customer_name": "abc",
+            "amount": 875.0,
+            "method": "cash",
+            "mobile_number": "9089786756",
+            "order_id": "SO-002",
+            "added_on": "2024-11-12 11:53:51"
+        }
+    }
+]

@@ -48,6 +48,13 @@ class OrderFeature(ManageOrder):
                 table_number = table_number_validate(input(Messages.enter_table_number()))
                 if not table_number:
                     raise ValueError(Messages.invalid_table_number())
+                
+                existing_booking = self.table_booking_system.tables.get(str(table_number))
+                self.table_booking_system.tables = self.table_booking_system.load_bookings()
+                existing_booking = self.table_booking_system.tables.get(str(table_number))
+                if existing_booking and existing_booking['customer']:
+                    Messages.table_already_booked(table_number, existing_booking['customer'])
+                    return
 
                 seats_required = int(input(Messages.enter_seats_required()))
                 self.table_booking_system.book_table(table_number, customer_name, seats_required)

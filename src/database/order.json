@@ -1,5 +1,6 @@
 [
     {
+<<<<<<< HEAD
         "id": "282a89",
         "customer_name": "vimal",
         "table_number": 3,
@@ -10,5 +11,47 @@
         "total_amount": 0,
         "order_date": "2024-11-11 19:40:18",
         "order_type": "eat in"
+=======
+        "id": "f5eb80",
+        "customer_name": "xyz",
+        "table_number": null,
+        "items": [
+            "Grilled Sandwich"
+        ],
+        "quantity": [
+            5
+        ],
+        "total_amount": 875,
+        "order_date": "2024-11-12 11:25:05",
+        "order_type": "take out"
+    },
+    {
+        "id": "201416",
+        "customer_name": "abc",
+        "table_number": 1,
+        "items": [
+            "Grilled Sandwich"
+        ],
+        "quantity": [
+            5
+        ],
+        "total_amount": 875,
+        "order_date": "2024-11-12 11:53:31",
+        "order_type": "eat in"
+    },
+    {
+        "id": "4d29f1",
+        "customer_name": "nisha",
+        "table_number": null,
+        "items": [
+            "Cheese Topping"
+        ],
+        "quantity": [
+            2
+        ],
+        "total_amount": 120,
+        "order_date": "2024-11-12 16:00:18",
+        "order_type": "take out"
+>>>>>>> d4c3f96fb30c9294d48188d665462e15763e39ce
     }
 ]
