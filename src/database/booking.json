@@ -8,8 +8,8 @@
         "seats": 5
     },
     "3": {
-        "customer": null,
-        "seats": 5
+        "customer": "vimal",
+        "seats": 0
     },
     "4": {
         "customer": null,
