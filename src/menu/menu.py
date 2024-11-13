@@ -105,7 +105,7 @@ class Menu:
         else:
             meal_type = matching_meals[0]
 
-        # Collecting item details
+      
         name = input(Messages.enter_item_name()).strip()
         if not validate_item(name):
             Messages.invalid_item_name()
