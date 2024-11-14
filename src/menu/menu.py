@@ -29,7 +29,7 @@ class Menu:
     MEAL_TYPES = [
         "breakfast", "lunch", "dinner", "snacks", 
         "soups", "starters", "main_course", "noodles",
-        "rice", "desserts", "tea_and_coffee", "ice_cream"
+        "rice", "desserts", "extras", "tea_and_coffee", "aerated_beverages", "ice_cream"
     ]
 
     def __init__(self, menu_file=MENU_FILE_PATH):
@@ -162,7 +162,7 @@ class Menu:
 
             del items[item_index]
             self.save_menu()
-            Messages.item_removed(item_to_remove.name, meal_type)
+            Messages.item_removed(meal_type, item_to_remove.name)
         except ValueError:
             Messages.invalid_choice()
 
