@@ -25,7 +25,7 @@ class OrderFeature(ManageOrder):
                 raise ValueError(Messages.invalid_order_type())
 
             items = input(Messages.enter_items()).split(',')
-            items = [item.strip() for item in items]
+            items = [item.strip() for item in items if item.strip()]
 
             total_amount = 0
             quantities = []
@@ -48,29 +48,36 @@ class OrderFeature(ManageOrder):
                 table_number = table_number_validate(input(Messages.enter_table_number()))
                 if not table_number:
                     raise ValueError(Messages.invalid_table_number())
-                
-                existing_booking = self.table_booking_system.tables.get(str(table_number))
-                self.table_booking_system.tables = self.table_booking_system.load_bookings()
-                existing_booking = self.table_booking_system.tables.get(str(table_number))
-                if existing_booking and existing_booking['customer']:
-                    Messages.table_already_booked(table_number, existing_booking['customer'])
-                    return
 
-                seats_required = int(input(Messages.enter_seats_required()))
-                self.table_booking_system.book_table(table_number, customer_name, seats_required)
+                time_slot = input(Messages.enter_time_slot()).strip()
+                if not time_slot or time_slot not in self.table_booking_system.TIME_SLOTS:
+                    raise ValueError(Messages.invalid_time_slot())
+
+                if not self.table_booking_system.is_table_booked(table_number, customer_name, time_slot):
+                    Messages.no_table_booking()
+                    return
 
             self.add_order(customer_name, table_number, items, quantities, total_amount, order_type)
         except ValueError as error:
             Messages.error_message(error)
 
-    def add_order(self, customer_name, table_number, items, quantity, total_amount, order_type):
+    def add_order(self, customer_name, table_number, items, quantities, total_amount, order_type):
         order_id = str(uuid.uuid4())[:6]
-        order_date = datetime.now()
+        order_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         if order_type == "take out":
             table_number = None
 
-        new_order = OrderModel(order_id, customer_name, table_number, items, quantity, total_amount, order_date, order_type)
+        new_order = OrderModel(
+            id=order_id,
+            customer_name=customer_name,
+            table_number=table_number,
+            items=items,
+            quantity=quantities,
+            total_amount=total_amount,
+            order_date=order_date,
+            order_type=order_type
+        )
         self.orders.append(new_order)
         self.save_order()
         Messages.order_added_successfully()
@@ -140,7 +147,7 @@ class OrderFeature(ManageOrder):
     def manage_orders(self):
         while True:
             Messages.order_management_menu()
-            choice = input(Messages.enter_choice())
+            choice = input(Messages.enter_choice()).strip()
 
             if choice == '1':
                 self.order()

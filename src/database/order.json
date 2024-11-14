@@ -1,21 +1,7 @@
 [
     {
-        "id": "f5eb80",
+        "id": "c623cd",
         "customer_name": "xyz",
-        "table_number": null,
-        "items": [
-            "Grilled Sandwich"
-        ],
-        "quantity": [
-            5
-        ],
-        "total_amount": 875,
-        "order_date": "2024-11-12 11:25:05",
-        "order_type": "take out"
-    },
-    {
-        "id": "201416",
-        "customer_name": "abc",
         "table_number": 1,
         "items": [
             "Grilled Sandwich"
@@ -24,7 +10,7 @@
             5
         ],
         "total_amount": 875,
-        "order_date": "2024-11-12 11:53:31",
+        "order_date": "2024-11-14 12:57:45",
         "order_type": "eat in"
     }
 ]

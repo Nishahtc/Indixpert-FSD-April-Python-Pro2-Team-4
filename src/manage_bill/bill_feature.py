@@ -1,3 +1,4 @@
+import uuid
 from src.manage_bill.manage_bill import ManageBill
 from src.utility.validations import validate_id, table_number_validate
 from src.orders.order_feature import OrderFeature
@@ -12,6 +13,7 @@ class BillFeature(ManageBill):
     def bill_create(self):
         try:
             self.order_feature.orders = self.order_feature.load_orders()
+
             order_id_input = input(Messages.enter_order_id()).strip()
 
             if order_id_input:
@@ -23,6 +25,7 @@ class BillFeature(ManageBill):
 
             if not orders_for_billing:
                 Messages.no_orders_found(order_id_input, table_number)
+                return
 
             total_amount = 0
             items = []
@@ -69,9 +72,24 @@ class BillFeature(ManageBill):
 
             if orders_for_billing[0].order_type == "eat in":
                 table_number = orders_for_billing[0].table_number
-                self.order_feature.table_booking_system.cancel_booking(table_number)
-                self.order_feature.table_booking_system.save_bookings()
-
+                
+                booking_system = self.order_feature.table_booking_system
+                booking_system.tables = booking_system.load_bookings()
+                
+                time_slot = None
+                customer_name = orders_for_billing[0].customer_name
+                for slot, booking in booking_system.tables[str(table_number)]['bookings'].items():
+                    if booking and booking['customer'].lower() == customer_name.lower():
+                        time_slot = slot
+                        break
+                
+                if time_slot:
+                    booking_system.cancel_booking(table_number, time_slot)
+                    booking_system.save_bookings()
+                    Messages.booking_cancelled(table_number)
+                else:
+                    Messages.no_booking_found()
+                    
         except ValueError as error:
             Messages.error_message(error)
 
@@ -86,10 +104,12 @@ class BillFeature(ManageBill):
             if portion_size not in ['full', 'half']:
                 Messages.invalid_choice()
                 continue
+
             price = self.order_feature.menu.get_item_price(item, portion_size)
             if price is None:
                 Messages.item_not_found(item)
                 continue
+
             items.append(item)
             quantities.append(quantity)
             prices.append(price)
@@ -121,4 +141,3 @@ class BillFeature(ManageBill):
 
     def search_all_bills(self):
         self.get_all_bills()
-        

@@ -48,6 +48,16 @@ class Menu:
                     Messages.error_loading_menu()
                     print(f"Error: Menu file '{self.file}' is corrupted. Loading empty menu.")
         return {meal: [] for meal in self.MEAL_TYPES}
+    
+    def get_item_price(self, item_name, portion_size):
+        for items in self.menu_data.values():
+            for item in items:
+                if item.name.lower() == item_name.lower():
+                    if portion_size == 'full':
+                        return item.full_price
+                    elif portion_size == 'half' and item.half_price is not None:
+                        return item.half_price
+        return None
 
     def save_menu(self):
         with open(self.file, 'w') as file:

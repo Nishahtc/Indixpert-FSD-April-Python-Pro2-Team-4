@@ -679,3 +679,32 @@ class Messages:
     @staticmethod
     def enter_portion_size():
         return "Enter portion size (full/half): "
+    
+    @staticmethod
+    def enter_time_slot():
+        return "Enter preferred time slot (e.g., 12:00-14:00): "
+    
+    @staticmethod
+    def time_slot_available(time_slot):
+        """Display message for available time slots."""
+        print(f"Time Slot {time_slot} is available.")
+
+    @staticmethod
+    def time_slot_booked(time_slot, customer, seats):
+        """Display message for booked time slots."""
+        print(f"Time Slot {time_slot} is booked by {customer} for {seats} seats.")
+
+    @staticmethod
+    def invalid_time_slot():
+        """Display error for invalid time slot."""
+        print("Invalid time slot. Please enter a valid time slot.")
+
+    @staticmethod
+    def no_table_booking():
+        """Display error when no table booking is found."""
+        print("No table booking found for the specified customer and time slot.")
+
+    @staticmethod
+    def time_slot_already_booked():
+        """Display error when time slot is already booked."""
+        print("Time slot already booked for the selected table.")
