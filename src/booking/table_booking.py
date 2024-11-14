@@ -3,7 +3,6 @@ import os
 from src.utility.validations import customer_name_validate
 from src.utility.messages import Messages
 
-# File paths
 DATABASE_FOLDER = "src/database"
 TABLE_BOOKING_FILE = os.path.join(DATABASE_FOLDER, "booking.json")
 
