@@ -56,9 +56,9 @@ class Messages:
     def no_users():
         print("No registered users found.")
 
-    @staticmethod
-    def user_details(username, role):
-        print(f"Username: {username}, Role: {role}")
+    # @staticmethod
+    # def user_details(username, role):
+    #     print(f"Username: {username}, Role: {role}")
 
     @staticmethod
     def enter_username_to_delete():

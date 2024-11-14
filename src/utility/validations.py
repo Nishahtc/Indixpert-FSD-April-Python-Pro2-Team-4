@@ -72,3 +72,10 @@ def is_username_taken(users, username):
             return True
     return False
 
+def validate_email(email):
+    pattern = r'^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$'
+    return re.match(pattern, email) is not None
+
+def validate_mobile_number(mobile_number):
+    return mobile_number.isdigit() and len(mobile_number) == 10
+

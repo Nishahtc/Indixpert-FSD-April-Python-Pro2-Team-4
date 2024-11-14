@@ -1,6 +1,6 @@
 import json
 import os
-from src.utility.validations import admin_check, is_username_taken
+from src.utility.validations import is_username_taken, admin_check, validate_email, validate_mobile_number
 from src.dashboard.admin_dashboard import AdminDashboard
 from src.dashboard.staff_dashboard import StaffDashboard
 from src.menu.menu import Menu
@@ -43,6 +43,17 @@ class System:
         if is_username_taken(self.users, username):
             Messages.username_exists()
             return
+        
+        email = input("Enter email: ").strip().lower()
+        mobile_number = input("Enter mobile number: ")
+        
+        if not validate_email(email):
+            print("Invalid email format. Please try again.")
+            return
+        
+        if not validate_mobile_number(mobile_number):
+            print("Invalid mobile number. It should be 10 digits long.")
+            return
 
         role = 'admin' if not admin_check(self.users) else 'staff'
         new_user = {
@@ -50,6 +61,8 @@ class System:
             'last_name': input("Enter last name: "),
             'username': username,
             'password': password,
+            'email': email,
+            'mobile_number': mobile_number,
             'role': role
         }
         self.users.append(new_user)
@@ -76,7 +89,7 @@ class System:
         if self.users:
             Messages.registered_users()
             for user in self.users:
-                Messages.user_details(user['username'], user['role'])
+                print(f"Username: {user['username']}, Role: {user['role']}, Email: {user['email']}, Mobile: {user['mobile_number']}")
         else:
             Messages.no_users()
 

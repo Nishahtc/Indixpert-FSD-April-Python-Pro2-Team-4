@@ -26,5 +26,37 @@
         "total_amount": 240,
         "order_date": "2024-11-14 13:08:12",
         "order_type": "take out"
+    },
+    {
+        "id": "92c017",
+        "customer_name": "abdef",
+        "table_number": 1,
+        "items": [
+            "Tutti Fruti",
+            "Vanilla"
+        ],
+        "quantity": [
+            3,
+            2
+        ],
+        "total_amount": 192,
+        "order_date": "2024-11-14 16:01:12",
+        "order_type": "eat in"
+    },
+    {
+        "id": "bb1aa8",
+        "customer_name": "hjkl",
+        "table_number": 2,
+        "items": [
+            "Fresh Lime Soda",
+            "Fresh Lime Soda"
+        ],
+        "quantity": [
+            4,
+            3
+        ],
+        "total_amount": 420,
+        "order_date": "2024-11-14 16:02:20",
+        "order_type": "eat in"
     }
 ]
