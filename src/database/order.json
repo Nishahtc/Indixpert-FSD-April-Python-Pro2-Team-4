@@ -12,5 +12,19 @@
         "total_amount": 875,
         "order_date": "2024-11-14 12:57:45",
         "order_type": "eat in"
+    },
+    {
+        "id": "4c98b4",
+        "customer_name": "abc",
+        "table_number": null,
+        "items": [
+            "Fresh Lime Water"
+        ],
+        "quantity": [
+            4
+        ],
+        "total_amount": 240,
+        "order_date": "2024-11-14 13:08:12",
+        "order_type": "take out"
     }
 ]
