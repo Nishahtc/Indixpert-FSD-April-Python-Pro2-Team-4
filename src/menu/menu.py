@@ -170,9 +170,14 @@ class Menu:
         initial = initial.lower()
         return [meal for meal in self.MEAL_TYPES if meal.startswith(initial)]
 
-    def manage_menu(self):
+    def manage_menu(self, user_role):
         try:
             while True:
+                if user_role == 'staff':
+                    self.view_menu()
+                    self.prompt_return_to_dashboard()
+                    break
+                
                 Messages.menu_management_menu()
 
                 choice = input(Messages.enter_choice()).strip()

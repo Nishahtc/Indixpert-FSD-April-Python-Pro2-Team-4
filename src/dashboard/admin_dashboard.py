@@ -13,7 +13,7 @@ class AdminDashboard:
             if choice == '1':
                 self.system.manage_users()
             elif choice == '2':
-                self.menu.manage_menu()
+                self.menu.manage_menu('admin')
             elif choice == '3':
                 Messages.logging_out()
                 break

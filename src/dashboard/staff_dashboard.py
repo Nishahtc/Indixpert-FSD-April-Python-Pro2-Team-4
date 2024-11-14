@@ -14,7 +14,8 @@ class StaffDashboard:
 
             choice = input(Messages.select_option())
             if choice == '1':
-                self.menu_dashboard.manage_menu()
+                self.menu_dashboard.view_menu()
+                self.menu_dashboard.prompt_return_to_dashboard()
             elif choice == '2':
                 self.booking_dashboard.manage_bookings()
             elif choice == '3':

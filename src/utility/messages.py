@@ -250,7 +250,7 @@ class Messages:
     @staticmethod
     def staff_menu():
         print("\n***** Staff Menu *****")
-        print("1. Manage Menu")
+        print("1. View Menu")
         print("2. Manage Table Bookings")
         print("3. Manage Orders")
         print("4. Manage Bills")
