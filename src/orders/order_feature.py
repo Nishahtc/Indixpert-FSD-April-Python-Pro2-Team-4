@@ -23,6 +23,22 @@ class OrderFeature(ManageOrder):
             order_type = input(Messages.enter_order_type()).strip().lower()
             if order_type not in ("eat in", "take out"):
                 raise ValueError(Messages.invalid_order_type())
+            
+            table_number = None
+            
+            if order_type == "eat in":
+                table_number = table_number_validate(input(Messages.enter_table_number()))
+                if not table_number:
+                    raise ValueError(Messages.invalid_table_number())
+
+                time_slot = input(Messages.enter_time_slot()).strip()
+                if not time_slot or time_slot not in self.table_booking_system.TIME_SLOTS:
+                    raise ValueError(Messages.invalid_time_slot())
+
+                if not self.table_booking_system.is_table_booked(table_number, customer_name, time_slot):
+                    Messages.no_table_booking()
+                    print("Please book a table first before placing an 'Eat In' order.")
+                    return
 
             items = input(Messages.enter_items()).split(',')
             items = [item.strip() for item in items if item.strip()]
@@ -41,21 +57,6 @@ class OrderFeature(ManageOrder):
                     continue
                 quantities.append(quantity)
                 total_amount += price * quantity
-
-            table_number = None
-
-            if order_type == "eat in":
-                table_number = table_number_validate(input(Messages.enter_table_number()))
-                if not table_number:
-                    raise ValueError(Messages.invalid_table_number())
-
-                time_slot = input(Messages.enter_time_slot()).strip()
-                if not time_slot or time_slot not in self.table_booking_system.TIME_SLOTS:
-                    raise ValueError(Messages.invalid_time_slot())
-
-                if not self.table_booking_system.is_table_booked(table_number, customer_name, time_slot):
-                    Messages.no_table_booking()
-                    return
 
             self.add_order(customer_name, table_number, items, quantities, total_amount, order_type)
         except ValueError as error:
