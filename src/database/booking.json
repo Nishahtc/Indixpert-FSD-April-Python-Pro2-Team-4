@@ -1,46 +1,29 @@
 {
     "1": {
-        "customer": null,
-        "seats": 5,
         "bookings": {
-            "12:00-14:00": {
-                "customer": "abdef",
-                "seats": 5
-            },
+            "12:00-14:00": null,
             "14:00-16:00": null,
             "18:00-20:00": null,
             "20:00-22:00": null
         }
     },
     "2": {
-        "customer": null,
-        "seats": 5,
         "bookings": {
             "12:00-14:00": null,
-            "14:00-16:00": {
-                "customer": "hjkl",
-                "seats": 5
-            },
+            "14:00-16:00": null,
             "18:00-20:00": null,
             "20:00-22:00": null
         }
     },
     "3": {
-        "customer": null,
-        "seats": 5,
         "bookings": {
             "12:00-14:00": null,
             "14:00-16:00": null,
-            "18:00-20:00": {
-                "customer": "yuiop",
-                "seats": 4
-            },
+            "18:00-20:00": null,
             "20:00-22:00": null
         }
     },
     "4": {
-        "customer": null,
-        "seats": 5,
         "bookings": {
             "12:00-14:00": null,
             "14:00-16:00": null,
@@ -49,8 +32,6 @@
         }
     },
     "5": {
-        "customer": null,
-        "seats": 5,
         "bookings": {
             "12:00-14:00": null,
             "14:00-16:00": null,

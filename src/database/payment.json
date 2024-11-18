@@ -1,18 +1,1 @@
-[
-    {
-        "customer_name": "xyz",
-        "amount": 875.0,
-        "method": "cash",
-        "mobile_number": "9089786756",
-        "order_id": "SO-001",
-        "added_on": "2024-11-14 12:58:01"
-    },
-    {
-        "customer_name": "abc",
-        "amount": 240.0,
-        "method": "cash",
-        "mobile_number": "8990787654",
-        "order_id": "SO-002",
-        "added_on": "2024-11-14 13:08:39"
-    }
-]
+[]

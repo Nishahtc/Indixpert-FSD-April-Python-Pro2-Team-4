@@ -1,5 +1,29 @@
 import re
+import json
+import os
 
+BOOKING_FILE_PATH = "src/database/booking.json"
+
+def has_reached_booking_limit(customer_name):
+    if not os.path.exists(BOOKING_FILE_PATH):
+        return False
+
+    try:
+        with open(BOOKING_FILE_PATH, 'r') as file:
+            tables = json.load(file)
+            total_bookings = 0
+            for table_info in tables.values():
+                for date, slots in table_info.items():
+                    for slot, booking in slots.items():
+                        if booking and booking['customer'].lower() == customer_name.lower():
+                            total_bookings += 1
+                            if total_bookings >= 5:
+                                return True
+        return False
+    except json.JSONDecodeError:
+        print("Error loading booking data.")
+        return False
+    
 def validate_id(id_value):
     if len(id_value) == 6 and id_value.isalnum():
         return id_value.upper()
@@ -11,11 +35,11 @@ def customer_name_validate(name):
         return name.lower()
     return False
 
-def validate_meal_type(meal_type):
-    pattern = r"^[A-Za-z\s]+$"
-    if re.match(pattern, meal_type):
-        return meal_type.strip().lower().replace(" ", "_")
-    return False
+# def validate_meal_type(meal_type):
+#     pattern = r"^[A-Za-z\s]+$"
+#     if re.match(pattern, meal_type):
+#         return meal_type.strip().lower().replace(" ", "_")
+#     return False
 
 def table_number_validate(table_number):
     if isinstance(table_number, str) and table_number.isdigit():
@@ -36,29 +60,29 @@ def validate_item(item_name):
         return item_name.title()
     return False
 
-def validate_quantity(quantity):
-    if quantity.isdigit() and int(quantity) > 0:
-        return int(quantity)
-    return False
+# def validate_quantity(quantity):
+#     if quantity.isdigit() and int(quantity) > 0:
+#         return int(quantity)
+#     return False
 
-def validate_price(price):
-    try:
-        price = int(price)
-        if price > 0:
-            return price
-    except ValueError:
-        return False
-    return False
+# def validate_price(price):
+#     try:
+#         price = int(price)
+#         if price > 0:
+#             return price
+#     except ValueError:
+#         return False
+#     return False
 
-def validate_meal_type(meal_type):
-    valid_meals = [
-        "breakfast", "lunch", "dinner", "snacks", 
-        "soups", "starters", "main_course", "noodles",
-        "rice", "desserts", "tea_and_coffee", "ice_cream"
-    ]
-    if meal_type in valid_meals:
-        return meal_type
-    return None
+# def validate_meal_type(meal_type):
+#     valid_meals = [
+#         "breakfast", "lunch", "dinner", "snacks", 
+#         "soups", "starters", "main_course", "noodles",
+#         "rice", "desserts", "tea_and_coffee", "ice_cream"
+#     ]
+#     if meal_type in valid_meals:
+#         return meal_type
+#     return None
 
 def admin_check(users):
     for user in users:

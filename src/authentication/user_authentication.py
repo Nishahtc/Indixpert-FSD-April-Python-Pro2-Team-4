@@ -8,8 +8,10 @@ from src.orders.order_feature import OrderFeature
 from src.manage_bill.bill_feature import BillFeature
 from src.booking.table_booking import TableBookingSystem
 from src.dashboard.bill_dashboard import BillDashboard
-from src.utility.messages import Messages
 from getpass import getpass
+from src.utility.log import log_login, log_logout
+from src.utility.messages import messages
+from src.utility.color import bcolors
 
 USER_FILE_PATH = "src/database/user.json"
 
@@ -24,35 +26,39 @@ class System:
         return []
 
     def save_users(self):
-        with open(USER_FILE_PATH, 'w') as file:
-            json.dump(self.users, file, indent=4)
+        try:
+            with open(USER_FILE_PATH, 'w') as file:
+                json.dump(self.users, file, indent=4)
+        except Exception:
+            print(messages.data_save_error)
 
     def login(self):
-        username = input("Enter username: ").strip().lower()
-        password = getpass("Enter password: ").strip().lower()
+        username = input(bcolors.colorize("Enter username: ", bcolors.PINK)).strip().lower()
+        password = getpass(bcolors.colorize("Enter password: ", bcolors.PINK)).strip().lower()
         for user in self.users:
             if user['username'] == username and user['password'] == password:
-                Messages.welcome_back(username)
+                print(bcolors.colorize(f"Welcome back, {username}!", bcolors.LIGHT_GREEN))
+                log_login(username, user['role'])
                 return user
-        Messages.invalid_credentials()
+        print(bcolors.colorize(messages.invalid_credentials, bcolors.RED))
         return None
 
     def signup(self):
         username = input("Enter username: ").strip().lower()
         password = getpass("Enter password: ").strip().lower()
         if is_username_taken(self.users, username):
-            Messages.username_exists()
+            print(messages.username_exists)
             return
         
         email = input("Enter email: ").strip().lower()
         mobile_number = input("Enter mobile number: ")
         
         if not validate_email(email):
-            print("Invalid email format. Please try again.")
+            print(messages.invalid_email)
             return
         
         if not validate_mobile_number(mobile_number):
-            print("Invalid mobile number. It should be 10 digits long.")
+            print(messages.invalid_mobile_number)
             return
 
         role = 'admin' if not admin_check(self.users) else 'staff'
@@ -67,12 +73,16 @@ class System:
         }
         self.users.append(new_user)
         self.save_users()
-        Messages.signup_success(username, role)
+        print(messages.user_signup_success)
 
     def manage_users(self):
         while True:
-            Messages.manage_users_menu()
-            choice = input(Messages.choose_option()).strip()
+            print("\n--- Manage Users ---")
+            print("1. View All Users")
+            print("2. Add New User")
+            print("3. Delete User")
+            print("4. Back to Admin Menu")
+            choice = input("Choose an option: ").strip()
 
             if choice == '1':
                 self.view_users()
@@ -83,25 +93,25 @@ class System:
             elif choice == '4':
                 break
             else:
-                Messages.invalid_choice()
+                print(messages.invalid_choice)
 
     def view_users(self):
         if self.users:
-            Messages.registered_users()
+            print("\nRegistered Users:")
             for user in self.users:
                 print(f"Username: {user['username']}, Role: {user['role']}, Email: {user['email']}, Mobile: {user['mobile_number']}")
         else:
-            Messages.no_users()
+            print(messages.no_registered_users)
 
     def delete_user(self):
-        username = input(Messages.enter_username_to_delete()).strip().lower()
+        username = input("Enter the username of the user to delete: ").strip().lower()
         for user in self.users:
             if user['username'] == username:
                 self.users.remove(user)
                 self.save_users()
-                Messages.user_deleted(username)
+                print(messages.user_deleted)
                 return
-        Messages.user_not_found(username)
+        print(messages.user_not_found)
 
 class RestaurantSystem:
     def __init__(self):
@@ -115,8 +125,11 @@ class RestaurantSystem:
     def display_menu(self):
         user = None
         while True:
-            Messages.welcome_system()
-            choice = input(Messages.choose_option()).strip()
+            print(bcolors.colorize("\n***** Welcome to One Bite Restaurant System *****", bcolors.TEAL))
+            print("1. Login")
+            print("2. Sign up")
+            print("3. Exit")
+            choice = input("Choose an option: ").strip()
             if choice == '1':
                 user = self.system.login()
                 if user:
@@ -124,15 +137,17 @@ class RestaurantSystem:
             elif choice == '2':
                 self.system.signup()
             elif choice == '3':
-                Messages.exit_system()
+                print(messages.exiting_system)
                 break
             else:
-                Messages.invalid_choice()
+                print(messages.invalid_choice)
 
         if user:
             if user['role'] == 'admin':
                 admin_dashboard = AdminDashboard(self.system, self.menu)
                 admin_dashboard.admin_actions()
+                log_logout(user['username'], user['role'])
             elif user['role'] == 'staff':
                 staff_dashboard = StaffDashboard(self.menu, self.table_booking, self.order_feature, self.bill_dashboard)
                 staff_dashboard.staff_actions()
+                log_logout(user['username'], user['role'])
