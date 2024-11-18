@@ -44,14 +44,14 @@ class System:
         return None
 
     def signup(self):
-        username = input("Enter username: ").strip().lower()
-        password = getpass("Enter password: ").strip().lower()
+        username = input(bcolors.colorize("Enter username: ", bcolors.PINK)).strip().lower()
+        password = getpass(bcolors.colorize("Enter password: ", bcolors.PINK)).strip().lower()
         if is_username_taken(self.users, username):
             print(messages.username_exists)
             return
         
-        email = input("Enter email: ").strip().lower()
-        mobile_number = input("Enter mobile number: ")
+        email = input(bcolors.colorize("Enter email: ", bcolors.PINK)).strip().lower()
+        mobile_number = input(bcolors.colorize("Enter mobile number: ",bcolors.PINK))
         
         if not validate_email(email):
             print(messages.invalid_email)
@@ -63,8 +63,8 @@ class System:
 
         role = 'admin' if not admin_check(self.users) else 'staff'
         new_user = {
-            'first_name': input("Enter first name: "),
-            'last_name': input("Enter last name: "),
+            'first_name': input(bcolors.colorize("Enter first name: ", bcolors.PINK)),
+            'last_name': input(bcolors.colorize("Enter last name: ", bcolors.PINK)),
             'username': username,
             'password': password,
             'email': email,
