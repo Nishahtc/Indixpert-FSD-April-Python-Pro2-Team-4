@@ -9,6 +9,9 @@ class bcolors:
     YELLOW_UNDERLINE = '\033[4;33m'
     GREY = '\033[38;5;240m'
     RESET = '\033[0m'
+    LIGHT_YELLOW = '\033[38;5;229m'
+    LIGHT_BLUE = '\033[38;5;39m'
+    CYAN = '\033[38;5;51m'
 
     @staticmethod
     def colorize(text, color):
