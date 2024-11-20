@@ -1,0 +1,20 @@
+[
+    {
+        "first_name": "rt",
+        "last_name": "yu",
+        "username": "admin",
+        "password": "123456",
+        "email": "admin@admin.com",
+        "mobile_number": "0998877665",
+        "role": "admin"
+    },
+    {
+        "first_name": "j",
+        "last_name": "k",
+        "username": "jk",
+        "password": "123456",
+        "email": "jk@staff.com",
+        "mobile_number": "8909765632",
+        "role": "staff"
+    }
+]
