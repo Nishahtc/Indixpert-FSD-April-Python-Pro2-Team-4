@@ -1,3 +1,4 @@
+from src.utility.color import bcolors
 class BillModel:
     def __init__(self, bill_id, customer_name, customer_phone_no, table_number, items, quantities, item_totals, total_amount, order_type=None, payment_info=None):
         self.bill_id = bill_id
@@ -12,32 +13,32 @@ class BillModel:
         self.payment_info = payment_info
 
     def __str__(self):
-        output = "\n" + "=" * 30
-        output += f"\n{'Restaurant Bill':^30}"
-        output += "\n" + "=" * 30
-        output += f"\nBill ID      : {self.bill_id}"
-        output += f"\nCustomer Name: {self.customer_name}"
-        output += f"\nTable Number : {self.table_number}"
-        output += f"\nOrder Type   : {self.order_type}"
-        output += "\n" + "-" * 30
+        output = "\n" + "=" * 40
+        output += bcolors.colorize(f"\n{'Restaurant Bill':^40}",bcolors.LIGHT_GREEN)
+        output += "\n" + "=" * 40
+        output += bcolors.colorize(f"\nBill ID      : {self.bill_id}",bcolors.ORANGE)
+        output += bcolors.colorize(f"\nCustomer Name: {self.customer_name}",bcolors.ORANGE)
+        output += bcolors.colorize(f"\nTable Number : {self.table_number}",bcolors.ORANGE)
+        output += bcolors.colorize(f"\nOrder Type   : {self.order_type}",bcolors.ORANGE)
+        output += "\n" + "-" * 40
 
-        output += f"\n{'Item':<15}{'Qty':<5}{'Total'}"
-        output += "\n" + "-" * 30
+        output += bcolors.colorize(f"\n{'Item':<25}{'Qty':<5}{'Total':>10}",bcolors.ORANGE)
+        output += "\n" + "-" * 40
 
         for item, qty, item_total in zip(self.items, self.quantities, self.item_totals):
-            output += f"\n{item:<15}{qty:<5}{item_total:.2f}"
+            output += bcolors.colorize(f"\n{item:<25}{qty:<5}{int(item_total):>10}",bcolors.ORANGE)
 
-        output += "\n" + "-" * 30
-        output += f"\n{'Total Amount':<20}{self.total_amount:.2f}"
+        output += "\n" + "-" * 40
+        output += bcolors.colorize(f"\n{'Total Amount':<30}{int(self.total_amount):>10}",bcolors.ORANGE)
 
         if self.payment_info:
-            output += "\n" + "-" * 30
-            output += f"\nPayment Method: {self.payment_info['method']}"
-            output += f"\nAmount Paid   : {self.payment_info['amount']:.2f}"
-            output += f"\nMobile Number : {self.payment_info['mobile_number']}"
-            output += "\n" + "=" * 30
+            output += "\n" + "-" * 40
+            output += bcolors.colorize(f"\nPayment Method: {self.payment_info['method']}",bcolors.ORANGE)
+            output += bcolors.colorize(f"\nAmount Paid   : {int(self.payment_info['amount'])}",bcolors.ORANGE)
+            output += bcolors.colorize(f"\nMobile Number : {self.payment_info['mobile_number']}",bcolors.ORANGE)
+            output += "\n" + "=" * 40
         else:
-            output += f"\n{'Payment':<20}Not completed"
+            output += bcolors.colorize(f"\n{'Payment':<30}Not completed",bcolors.ORANGE)
             output += "\n" + "=" * 30
 
         return output

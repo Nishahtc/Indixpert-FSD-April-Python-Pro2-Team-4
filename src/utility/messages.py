@@ -79,11 +79,13 @@ class Messages:
         self.no_payment_records = info_message("No payment records found.")
         self.payment_success = info_message("Payment processed successfully.")
         self.payment_failed = error_message("Payment failed. Please try again.")
-        self.invalid_card_number = error_message("Invalid credit card number. It must be a 16-digit number.")
-        self.invalid_pin = error_message("Invalid PIN. Please enter a 4-digit number.")
+        self.invalid_card_number = error_message("Invalid credit card number.")
+        self.invalid_pin = error_message("Invalid PIN.")
         self.invalid_mobile_number_for_payment = error_message("Invalid mobile number. It should be exactly 10 digits.")
         self.payment_save_error = error_message("Error saving payment information.")
         self.corrupted_payment_file = error_message("Corrupted payment file. Initializing new payment file.")
+        self.invalid_upi_id = error_message("Invalid UPI ID.")
+        self.invalid_upi_pin = error_message("Invalid UPI pin.")
 
         # Validation error messages
         self.customer_name_invalid = error_message("Invalid customer name. Only alphabetic characters are allowed.")

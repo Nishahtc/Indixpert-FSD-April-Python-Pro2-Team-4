@@ -11,7 +11,7 @@
             "half_price": 57
         },
         {
-            "name": "Chilli Cheese Garlic Toast",
+            "name": "Cheese Garlic Toast",
             "full_price": 115,
             "half_price": 57
         },
@@ -181,7 +181,7 @@
             "half_price": 76
         },
         {
-            "name": "Potatoes in Honey & Chilly",
+            "name": "Honey & Chilly Potato",
             "full_price": 175,
             "half_price": 87
         },
@@ -277,18 +277,6 @@
             "name": "Halwa",
             "full_price": 60,
             "half_price": 30
-        }
-    ],
-    "extras": [
-        {
-            "name": "Sambhar",
-            "full_price": 35,
-            "half_price": 17
-        },
-        {
-            "name": "Chutney",
-            "full_price": 20,
-            "half_price": 10
         }
     ],
     "tea_and_coffee": [

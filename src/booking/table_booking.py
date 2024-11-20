@@ -35,7 +35,7 @@ class TableBookingSystem:
             
 
     def view_available_tables(self):
-        print(bcolors.colorize("\nAvailable Tables:", bcolors.WHITE_BOLD))
+        print(bcolors.colorize("\nAvailable Tables:", bcolors.LIGHT_GREEN))
         
         upcoming_dates = self.generate_date_options()
         
@@ -49,11 +49,11 @@ class TableBookingSystem:
                     print(f" Date: {date}")
                     for time_slot, booking in info[date].items():
                         if booking is None:
-                            print(f"     Time Slot {time_slot} is available.")
+                            print(bcolors.colorize(f"Time Slot {time_slot} is available.",bcolors.LIGHT_YELLOW))
                         else:
                             customer = booking['customer']
                             seats = booking['seats']
-                            print(f"     Time Slot {time_slot} is booked by {customer} for {seats} seats.")
+                            print(bcolors.colorize(f"Time Slot {time_slot} is booked by {customer} for {seats} seats.",bcolors.LIGHT_GREEN))
                             
             if not has_bookings:
                 print(messages.no_bookings)
@@ -73,11 +73,11 @@ class TableBookingSystem:
             return False
         
         if has_reached_booking_limit(customer_name):
-            print("Booking limit reached! You cannot book more than 5 tables.")
+            print(bcolors.colorize("Booking limit reached! You cannot book more than 5 tables.",bcolors.LIGHT_YELLOW))
             return False
         
         if seats_requested > 5:
-            print("Seat booking limit exceeded! You cannot book more than 5 seats.")
+            print(bcolors.colorize("Seat booking limit exceeded! You cannot book more than 5 seats.",bcolors.LIGHT_YELLOW))
             return False
         
         if date not in self.tables[table_number]:
@@ -135,12 +135,12 @@ class TableBookingSystem:
             print(messages.booking_not_found)
             return False
         
-        print(f"\nCurrent bookings for Table {table_number}:")
+        print(bcolors.colorize(f"\nCurrent bookings for Table {table_number}:"),bcolors.ORANGE)
         for index, (date, time_slot, customer) in enumerate(booked_entries, start=1):
-            print(f"{index}. Date: {date}, Time Slot: {time_slot}, Customer: {customer}")
+            print(bcolors.colorize(f"{index}. Date: {date}, Time Slot: {time_slot}, Customer: {customer}",bcolors.CYAN))
             
         try:
-            choice = int(input("Enter your choice to cancel (1, 2, 3, etc.): ").strip())
+            choice = int(input(bcolors.colorize("Enter your choice to cancel (1, 2, 3, etc.): ",bcolors.TEAL)).strip())
             if choice < 1 or choice > len(booked_entries):
                 print(messages.invalid_choice)
                 return False
@@ -149,7 +149,7 @@ class TableBookingSystem:
             return False
         
         selected_date, selected_slot, customer_name = booked_entries[choice - 1]
-        print(f"Cancelling booking for Table {table_number} on {selected_date} at {selected_slot} by {customer_name}.")
+        print(bcolors.colorize(f"Cancelling booking for Table {table_number} on {selected_date} at {selected_slot} by {customer_name}.",bcolors.LIGHT_YELLOW))
         del self.tables[table_number][selected_date][selected_slot]
         
         if not self.tables[table_number][selected_date]:
@@ -161,7 +161,7 @@ class TableBookingSystem:
 
     def manage_bookings(self):
         while True:
-            print("\n--- Table Booking Management ---")
+            print(bcolors.colorize("\n--- Table Booking Management ---",bcolors.ORANGE))
             print("1. View All Tables")
             print("2. Book a Table")
             print("3. Cancel a Booking")
@@ -174,34 +174,34 @@ class TableBookingSystem:
                 self.prompt_return_to_dashboard()
             elif choice == '2':
                 try:
-                    table_number = int(input("Enter table number to book: "))
-                    customer_name = input("Enter customer name: ")
-                    seats_requested = int(input("Enter number of seats to book: "))
+                    table_number = int(input(bcolors.colorize("Enter table number to book: ",bcolors.TEAL)))
+                    customer_name = input(bcolors.colorize("Enter customer name: ",bcolors.TEAL))
+                    seats_requested = int(input(bcolors.colorize("Enter number of seats to book: ",bcolors.TEAL)))
                     
-                    print("\nAvailable dates:")
+                    print(bcolors.colorize("\nAvailable dates:",bcolors.ORANGE))
                     upcoming_dates = self.generate_date_options()
                     for idx, date in enumerate(upcoming_dates, start=1):
                         print(f"{idx}. {date}")
                     
-                    date_choice = int(input("Enter your choice for date: ").strip())
+                    date_choice = int(input(bcolors.colorize("Enter your choice for date: ",bcolors.TEAL)).strip())
                     if date_choice < 1 or date_choice > len(upcoming_dates):
-                        print("Invalid choice. Please select a valid date.")
+                        print(bcolors.colorize("Invalid choice. Please select a valid date.",bcolors.RED))
                         return
                     
                     selected_date = upcoming_dates[date_choice - 1]
                     
-                    print("\nAvailable time slots:")
+                    print(bcolors.colorize("\nAvailable time slots:",bcolors.ORANGE))
                     available_slots = [slot for slot in self.TIME_SLOTS if
                                        self.tables[str(table_number)].get(selected_date, {}).get(slot) is None]
                     
                     if not available_slots:
-                        print("No available time slots for the selected table on this date.")
+                        print(bcolors.colorize("No available time slots for the selected table on this date.",bcolors.LIGHT_YELLOW))
                         return
                     
                     for idx, slot in enumerate(available_slots, start=1):
-                        print(f"{idx}. {slot}")
+                        print(bcolors.colorize(f"{idx}. {slot}",bcolors.CYAN))
                     
-                    time_slot_choice = int(input("Enter your choice for time slot: ").strip())
+                    time_slot_choice = int(input(bcolors.colorize("Enter your choice for time slot: ",bcolors.TEAL)).strip())
                     if time_slot_choice < 1 or time_slot_choice > len(available_slots):
                         print(messages.invalid_choice)
                         return
@@ -215,7 +215,7 @@ class TableBookingSystem:
             
             elif choice == '3':
                 try:
-                    table_number = int(input("Enter table number to cancel: "))
+                    table_number = int(input(bcolors.colorize("Enter table number to cancel: ",bcolors.TEAL)))
                     self.cancel_booking(table_number)
                 except ValueError:
                     print(messages.invalid_input)

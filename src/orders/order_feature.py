@@ -1,12 +1,12 @@
 import uuid
 from datetime import datetime
 from src.orders.manage_order import ManageOrder
-from src.orders.order_model import OrderModel
 from src.utility.validations import customer_name_validate, table_number_validate
 from src.menu.menu import Menu
 from src.booking.table_booking import TableBookingSystem
-from src.utility.log import log_order
 from src.utility.messages import messages
+from src.utility.color import bcolors
+
 
 class OrderFeature(ManageOrder):
     def __init__(self):
@@ -16,11 +16,11 @@ class OrderFeature(ManageOrder):
 
     def order(self):
         try:
-            customer_name = customer_name_validate(input("Enter customer name: "))
+            customer_name = customer_name_validate(input(bcolors.colorize("Enter customer name: ",bcolors.TEAL)))
             if not customer_name:
                 raise ValueError(messages.customer_name_invalid)
 
-            print("\nSelect Order Type:")
+            print(bcolors.colorize("\nSelect Order Type:",bcolors.ORANGE))
             print("1. Eat In")
             print("2. Take Out")
             order_type_choice = input("Enter your choice (1 or 2): ").strip()
@@ -37,7 +37,7 @@ class OrderFeature(ManageOrder):
             time_slot = None
 
             if order_type == "eat in":
-                table_number = table_number_validate(input("Enter table number: "))
+                table_number = table_number_validate(input(bcolors.colorize("Enter table number: ",bcolors.TEAL)))
                 if not table_number:
                     raise ValueError(messages.invalid_table_number)
 
@@ -48,11 +48,11 @@ class OrderFeature(ManageOrder):
                 for slot, booking in bookings_for_today.items():
                     if booking and booking['customer'].lower() == customer_name.lower():
                         time_slot = slot
-                        print(f"Existing booking found for customer '{customer_name}' at Table {table_number} for time slot '{time_slot}'.")
+                        print(bcolors.colorize(f"Existing booking found for customer '{customer_name}' at Table {table_number} for time slot '{time_slot}'.",bcolors.LIGHT_YELLOW))
                         break
                 
                 if not time_slot:
-                    print(f"\nNo booking found for '{customer_name}' at Table {table_number}. Let's book a table for you.")
+                    print(bcolors.colorize(f"\nNo booking found for '{customer_name}' at Table {table_number}. Let's book a table for you.",bcolors.LIGHT_YELLOW))
                     if not self.book_table_for_order(customer_name, table_number):
                         print(messages.booking_failed)
                         return
@@ -62,13 +62,13 @@ class OrderFeature(ManageOrder):
             total_amount = 0
             
             while True:
-                print("\n--- Select Meal Type ---")
-                print("Available meal types:")
+                print(bcolors.colorize("\n--- Select Meal Type ---",bcolors.LIGHT_GREEN))
+                print(bcolors.colorize("Available meal types:",bcolors.ORANGE))
                 for idx, meal_type in enumerate(self.menu.MEAL_TYPES, start=1):
-                    print(f"{idx}. {meal_type.title()}")
-                print("Enter 'q' to finish adding items.")
+                    print(bcolors.colorize(f"{idx}. {meal_type.title()}",bcolors.CYAN))
+                print(bcolors.colorize("Enter 'q' to finish adding items.",bcolors.LIGHT_YELLOW))
                 
-                meal_choice = input("Enter meal type number (or 'q' to finish): ").strip().lower()
+                meal_choice = input(bcolors.colorize("Enter meal type number (or 'q' to finish): ",bcolors.TEAL)).strip().lower()
                 
                 if meal_choice == 'q':
                     break
@@ -85,17 +85,17 @@ class OrderFeature(ManageOrder):
                 
                 available_items = self.menu.menu_data.get(selected_meal_type, [])
                 if not available_items:
-                    print(f"No items available for {selected_meal_type}.")
+                    print(bcolors.colorize(f"No items available for {selected_meal_type}.",bcolors.LIGHT_YELLOW))
                     continue
                 
-                print(f"\nAvailable items in {selected_meal_type.title()}:")
-                print(f"{'S.No':<5}{'Item Name':<25}{'Full Price':>10}  {'Half Price':>10}")
+                print(bcolors.colorize(f"\nAvailable items in {selected_meal_type.title()}:",bcolors.ORANGE))
+                print(bcolors.colorize(f"{'S.No':<5}{'Item Name':<25}{'Full Price':>10}  {'Half Price':>10}",bcolors.CYAN))
                 print("-" * 50)
                 for idx, item in enumerate(available_items, start=1):
-                    half_price = f"{item.half_price:.2f}" if item.half_price else "N/A"
-                    print(f"{idx:<5}{item.name:<25}{item.full_price:>10.2f}  {half_price:>10}")
+                    half_price = bcolors.colorize(f"{int(item.half_price)}",bcolors.CYAN) if item.half_price else "N/A"
+                    print(bcolors.colorize(f"{idx:<5}{item.name:<25}{int(item.full_price):>10}  {half_price:>10}",bcolors.CYAN))
 
-                item_choice = input("Enter item number to add (or 'b' to go back): ").strip().lower()
+                item_choice = input(bcolors.colorize("Enter item number to add (or 'b' to go back): ",bcolors.TEAL)).strip().lower()
                 if item_choice == 'b':
                     continue
                 
@@ -111,9 +111,9 @@ class OrderFeature(ManageOrder):
                 selected_item = available_items[item_index]
                 
                 try:
-                    quantity = int(input(f"Enter quantity for {selected_item.name}: "))
+                    quantity = int(input(bcolors.colorize(f"Enter quantity for {selected_item.name}: ",bcolors.TEAL)))
                     if quantity <= 0:
-                        print("Quantity must be a positive integer.")
+                        print(bcolors.colorize("Quantity must be a positive integer.",bcolors.LIGHT_YELLOW))
                         continue
                 except ValueError:
                     print(messages.invalid_input)
@@ -121,32 +121,33 @@ class OrderFeature(ManageOrder):
                 
                 if selected_item.half_price is None:
                     portion_size = "full"
-                    print(f"Selected portion size: {portion_size}")
+                    print(bcolors.colorize(f"Selected portion size: {portion_size}",bcolors.LIGHT_YELLOW))
                 else:
-                    portion_size = input(f"Enter portion size for {selected_item.name} (full/half): ").strip().lower()
+                    portion_size = input(bcolors.colorize(f"Enter portion size for {selected_item.name} (full/half): ",bcolors.TEAL)).strip().lower()
                     if portion_size not in ['full', 'half']:
                         print(messages.invalid_choice)
                         continue
                 
                 price = self.menu.get_item_price(selected_item.name, portion_size)
                 if price is None:
-                    print(f"Item '{selected_item.name}' not found in menu.")
+                    print(bcolors.colorize(f"Item '{selected_item.name}' not found in menu.",bcolors.LIGHT_YELLOW))
                     continue
                 
                 items.append(selected_item.name)
                 quantities.append(quantity)
                 total_amount += price * quantity
 
-                print(f"Added {quantity} x {selected_item.name} ({portion_size}) to the order.")
+                print(bcolors.colorize(f"Added {quantity} x {selected_item.name} ({portion_size}) to the order.",bcolors.LIGHT_GREEN))
             
             if not items:
                 print(messages.no_items_selected)
                 return
             
-            self.add_order(customer_name, table_number, items, quantities, total_amount, order_type)
-            print(f"\nOrder for customer '{customer_name}' at table {table_number if table_number else 'Take Out'} has been successfully added!")
+            
+            super().add_order(customer_name, table_number, items, quantities, total_amount, order_type)
+            print(bcolors.colorize(f"\nOrder for customer '{customer_name}' at table {table_number if table_number else 'Take Out'} has been successfully added!",bcolors.colorize))
         except ValueError as error:
-            print(f"Error: {error}")
+            print(bcolors.colorize(f"Error: {error}",bcolors.RED))
 
     def book_table_for_order(self, customer_name, table_number):
         current_date = datetime.now().strftime("%Y-%m-%d")
@@ -168,12 +169,12 @@ class OrderFeature(ManageOrder):
             print(messages.no_available_slots)
             return False
         
-        print("\nAvailable time slots for Table", table_number)
+        print(bcolors.colorize("\nAvailable time slots for Table",bcolors.LIGHT_YELLOW), table_number)
         for idx, slot in enumerate(available_slots, start=1):
-            print(f"{idx}. {slot}")
+            print(bcolors.colorize(f"{idx}. {slot}",bcolors.CYAN))
             
         try:
-            time_slot_choice = int(input("Enter your choice: ").strip())
+            time_slot_choice = int(input(bcolors.colorize("Enter your choice: ",bcolors.TEAL)).strip())
             if time_slot_choice < 1 or time_slot_choice > len(available_slots):
                 print(messages.invalid_choice)
                 return False
@@ -184,12 +185,12 @@ class OrderFeature(ManageOrder):
         selected_time_slot = available_slots[time_slot_choice - 1]
         
         try:
-            seats_requested = int(input("Enter number of seats to book: "))
+            seats_requested = int(input(bcolors.colorize("Enter number of seats to book: ",bcolors.TEAL)))
             if seats_requested <= 0:
-                print("Number of seats must be positive.")
+                print(bcolors.colorize("Number of seats must be positive.",bcolors.LIGHT_YELLOW))
                 return False
         except ValueError:
-            print("Invalid input for number of seats.")
+            print(bcolors.colorize("Invalid input for number of seats.",bcolors.RED))
             return False
         
         booking_success = self.table_booking_system.book_table(
@@ -197,206 +198,9 @@ class OrderFeature(ManageOrder):
         )
         
         if booking_success:
-            print(f"Table {table_number} booked successfully for {customer_name} at {selected_time_slot}.")
+            print(bcolors.colorize(f"Table {table_number} booked successfully for {customer_name} at {selected_time_slot}.",bcolors.LIGHT_GREEN))
             self.table_booking_system.save_bookings()
             return True
         else:
-            print("Failed to book the table.")
+            print(bcolors.colorize("Failed to book the table.",bcolors.LIGHT_YELLOW))
             return False
-
-    def add_order(self, customer_name, table_number, items, quantities, total_amount, order_type):
-        order_id = str(uuid.uuid4())[:6]
-        order_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-        if order_type == "take out":
-            table_number = None
-
-        new_order = OrderModel(
-            id=order_id,
-            customer_name=customer_name,
-            table_number=table_number,
-            items=items,
-            quantity=quantities,
-            total_amount=total_amount,
-            order_date=order_date,
-            order_type=order_type
-        )
-        self.orders.append(new_order)
-        self.save_order()
-        log_order("staff", customer_name, items, quantities, total_amount)
-        print(f"Order added successfully with Order ID: {order_id}")
-
-    def update_item(self):
-        try:
-            print("\nSearch for Order by:")
-            print("1. Table Number")
-            print("2. Order ID")
-            search_choice = input("Enter your choice: ").strip()
-            
-            if search_choice == '1':
-                search_type = "table"
-            elif search_choice == '2':
-                search_type = "order_id"
-            else:
-                print("Invalid choice. Please enter 1 or 2.")
-                return
-            
-            if search_type == "table":
-                table_number = table_number_validate(input("Enter table number to update order: "))
-                if not table_number:
-                    raise ValueError("Invalid table number.")
-                found_orders = [order for order in self.orders if order.table_number == table_number]
-
-            elif search_type == "order_id":
-                order_id = input("Enter order ID to update: ").strip()
-                found_orders = [order for order in self.orders if order.id == order_id]
-
-            else:
-                raise ValueError("Invalid choice. Please enter 'table' or 'order_id'.")
-
-            if not found_orders:
-                print("No orders found.")
-                return
-
-            order = found_orders[0]
-            print(f"\n--- Updating Order ID: {order.id} ---")
-
-            items, quantities = [], []
-
-            while True:
-                item = input("Enter the item name (leave blank to stop): ").strip()
-                if not item:
-                    break
-
-                try:
-                    quantity = int(input(f"Enter quantity for {item}: "))
-                except ValueError:
-                    print("Invalid quantity. Please enter a number.")
-                    continue
-
-                portion_size = input(f"Enter portion size for {item} (full/half): ").strip().lower()
-                if portion_size not in ['full', 'half']:
-                    print("Invalid portion size. Try again.")
-                    continue
-
-                price = self.menu.get_item_price(item, portion_size)
-                if price is None:
-                    print(f"Item '{item}' not found in the menu.")
-                    continue
-
-                items.append(item)
-                quantities.append(quantity)
-
-            if not items:
-                print("No items entered. Order update cancelled.")
-                return
-
-            order.items = items
-            order.quantity = quantities
-            order.total_amount = sum(qty * self.menu.get_item_price(item, 'full') for item, qty in zip(items, quantities))
-
-            self.save_order()
-            log_order("staff", order.customer_name, items, quantities, order.total_amount)
-            print(f"Order ID {order.id} updated successfully!")
-
-        except ValueError as error:
-            print(f"Error: {error}")
-
-    def cancel_item(self):
-        try:
-            print("\nCancel Order by:")
-            print("1. Table Number")
-            print("2. Order ID")
-            cancel_choice = input("Enter your choice (1 or 2): ").strip()
-            
-            if cancel_choice == '1':
-                cancel_type = 'table'
-            elif cancel_choice == '2':
-                cancel_type = 'order_id'
-            else:
-                print("Invalid choice. Please enter 1 or 2.")
-                return
-            
-            if cancel_type == "table":
-                table_number = table_number_validate(input("Enter table number to cancel order: "))
-                if not table_number:
-                    raise ValueError("Invalid table number.")
-                self.cancel_order_by_table(table_number)
-
-            elif cancel_type == "order_id":
-                order_id = input("Enter order ID to cancel: ").strip()
-                self.cancel_order_by_id(order_id)
-            
-            else:
-                raise ValueError("Invalid choice. Please enter 'table' or 'order id'.")
-
-        except ValueError as error:
-            print(f"Error: {error}")
-
-    def cancel_order_by_table(self, table_number):
-        for order in self.orders:
-            if order.table_number == table_number:
-                self.orders.remove(order)
-                self.save_order()
-                log_order("staff", order.customer_name, order.items, order.quantity, order.total_amount)
-                print(f"Order for Table {table_number} has been cancelled successfully.")
-                return
-        print(f"No order found for Table {table_number}.")
-
-    def cancel_order_by_id(self, order_id):
-        for order in self.orders:
-            if order.id == order_id:
-                self.orders.remove(order)
-                self.save_order()
-                log_order("staff", order.customer_name, order.items, order.quantity, order.total_amount)
-                print(f"Order with ID {order_id} has been cancelled successfully.")
-                return
-        print(f"No order found with ID {order_id}.")
-
-    def search_order(self):
-        try:
-            print("\nSearch for Order by:")
-            print("1. Table Number")
-            print("2. Order ID")
-            search_choice = input("Enter your choice (1 or 2): ").strip()
-            
-            if search_choice == '1':
-                search_type = 'table_number'
-            elif search_choice == '2':
-                search_type = 'order_id'
-            else:
-                print("Invalid choice. Please enter 1 or 2.")
-                return
-            
-            if search_type == 'table_number':
-                table_number = table_number_validate(input("Enter table number to search for orders: "))
-                if not table_number:
-                    raise ValueError("Invalid table number.")
-                found_orders = [order for order in self.orders if order.table_number == table_number]
-                
-            elif search_type == "order_id":
-                order_id = input("Enter order ID to search for: ").strip()
-                found_orders = [order for order in self.orders if order.id == order_id]
-                    
-            else:
-                print("Invalid choice. Please enter 'table number' or 'order id'.")
-                return
-            
-            if found_orders:
-                print("\nFound Orders:")
-                for order in found_orders:
-                    print(order)
-            
-            else:
-                print(messages.no_orders_found)
-        except ValueError as error:
-            print(f"Error: {error}")
-            
-            
-    def search_all_orders(self):
-        if self.orders:
-            print("\nAll Orders:")
-            for order in self.orders:
-                print(order)
-        else:
-            print(messages.no_orders_found)

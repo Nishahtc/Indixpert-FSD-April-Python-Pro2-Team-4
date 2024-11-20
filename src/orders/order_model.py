@@ -1,4 +1,5 @@
 from datetime import datetime
+from src.utility.color import bcolors
 
 class OrderModel:
     def __init__(self, id, customer_name, table_number, items, quantity, total_amount, order_date=None, order_type=None):
@@ -18,24 +19,24 @@ class OrderModel:
 
     def __str__(self):
         output = "\n" + "=" * 30
-        output += f"\n{'Order Summary':^30}"
+        output += bcolors.colorize(f"\n{'Order Summary':^30}",bcolors.LIGHT_GREEN)
         output += "\n" + "=" * 30
-        output += f"\nOrder ID      : {self.id}"
-        output += f"\nCustomer Name : {self.customer_name}"
-        output += f"\nTable Number  : {self.table_number}"
-        output += f"\nOrder Type    : {self.order_type}"
-        output += f"\nOrder Date    : {self.order_date}"
+        output += bcolors.colorize(f"\nOrder ID      : {self.id}",bcolors.CYAN)
+        output += bcolors.colorize(f"\nCustomer Name : {self.customer_name}",bcolors.CYAN)
+        output += bcolors.colorize(f"\nTable Number  : {self.table_number}",bcolors.CYAN)
+        output += bcolors.colorize(f"\nOrder Type    : {self.order_type}",bcolors.CYAN)
+        output += bcolors.colorize(f"\nOrder Date    : {self.order_date}",bcolors.CYAN)
         output += "\n" + "-" * 30
 
-        output += f"\n{'Item':<15}{'Qty':<5}{'Total'}"
+        output += bcolors.colorize(f"\n{'Item':<15}{'Qty':<5}{'Total'}",bcolors.CYAN)
         output += "\n" + "-" * 30
 
         for item, qty in zip(self.items, self.quantity):
             item_total = qty * self.total_amount // sum(self.quantity)
-            output += f"\n{item:<15}{qty:<5}{item_total:.2f}"
+            output += bcolors.colorize(f"\n{item:<15}{qty:<5}{item_total:.2f}",bcolors.CYAN)
 
         output += "\n" + "-" * 30
-        output += f"\n{'Total Amount':<20}{self.total_amount:.2f}"
+        output += bcolors.colorize(f"\n{'Total Amount':<20}{self.total_amount:.2f}",bcolors.CYAN)
         output += "\n" + "=" * 30
 
         return output

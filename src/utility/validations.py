@@ -26,7 +26,7 @@ def has_reached_booking_limit(customer_name):
     
 def validate_id(id_value):
     if len(id_value) == 6 and id_value.isalnum():
-        return id_value.upper()
+        return id_value.lower()
     return False
 
 def customer_name_validate(name):

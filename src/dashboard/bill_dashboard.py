@@ -1,9 +1,11 @@
 from src.utility.messages import messages
 from src.utility.color import bcolors
+from src.manage_bill.bill_feature import BillFeature
 
-class BillDashboard:
-    def __init__(self, bill_feature):
-        self.bill_feature = bill_feature
+class BillDashboard(BillFeature):
+    def __init__(self):
+        super().__init__()
+        self.bill_feature = BillFeature()
 
     def manage_bills(self):
         while True:
@@ -20,9 +22,9 @@ class BillDashboard:
             if choice == '1':
                 self.bill_feature.bill_create()
             elif choice == '2':
-                self.bill_feature.update()
+                self.bill_feature.bill_update()
             elif choice == '3':
-                self.bill_feature.delete_bill()
+                self.bill_feature.bill_delete()
             elif choice == '4':
                 self.bill_feature.search_bill_by_id()
                 self.prompt_return_to_dashboard()
@@ -42,4 +44,4 @@ class BillDashboard:
             if user_input == 'b':
                 break
             else:
-                print(bcolors.colorize(messages.invalid_input, bcolors.RED))
+                print(messages.invalid_input)

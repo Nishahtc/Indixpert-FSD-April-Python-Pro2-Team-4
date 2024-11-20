@@ -59,27 +59,27 @@ def save_payment(payment, filename=PAYMENT_FILE_PATH):
     except Exception:
         print(messages.data_save_error)
 
-def search_payments(query, search_type="mobile"):
-    if not os.path.exists(PAYMENT_FILE_PATH):
-        print(messages.no_payment_records)
-        return []
+# def search_payments(query, search_type="mobile"):
+#     if not os.path.exists(PAYMENT_FILE_PATH):
+#         print(messages.no_payment_records)
+#         return []
 
-    with open(PAYMENT_FILE_PATH, 'r') as file:
-        payments = json.load(file)
+#     with open(PAYMENT_FILE_PATH, 'r') as file:
+#         payments = json.load(file)
 
-    if search_type == "mobile":
-        return [p for p in payments if p['mobile_number'] == query]
-    elif search_type == "order_id":
-        return [p for p in payments if p['order_id'] == query]
+#     if search_type == "mobile":
+#         return [p for p in payments if p['mobile_number'] == query]
+#     elif search_type == "order_id":
+#         return [p for p in payments if p['order_id'] == query]
 
-def process_payment():
-    try:
-        amount = float(input("Enter payment amount: "))
-        method = input("Enter payment method (e.g., cash, card): ").strip()
-        customer_name = input("Enter customer name: ").strip()
-        mobile_number = input("Enter mobile number: ").strip()
-        payment = Payment(amount, method, customer_name, mobile_number)
-        save_payment(payment)
-        print("Payment processed successfully!")
-    except ValueError as e:
-        print(f"Error: {e}")
+# def process_payment():
+#     try:
+#         amount = float(input("Enter payment amount: "))
+#         method = input("Enter payment method (e.g., cash, card): ").strip()
+#         customer_name = input("Enter customer name: ").strip()
+#         mobile_number = input("Enter mobile number: ").strip()
+#         payment = Payment(amount, method, customer_name, mobile_number)
+#         save_payment(payment)
+#         print("Payment processed successfully!")
+#     except ValueError as e:
+#         print(f"Error: {e}")

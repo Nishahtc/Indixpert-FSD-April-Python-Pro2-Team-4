@@ -33,8 +33,8 @@ class System:
             print(messages.data_save_error)
 
     def login(self):
-        username = input(bcolors.colorize("Enter username: ", bcolors.PINK)).strip().lower()
-        password = getpass(bcolors.colorize("Enter password: ", bcolors.PINK)).strip().lower()
+        username = input(bcolors.colorize("Enter username: ", bcolors.  TEAL)).strip().lower()
+        password = getpass(bcolors.colorize("Enter password: ", bcolors.  TEAL)).strip().lower()
         for user in self.users:
             if user['username'] == username and user['password'] == password:
                 print(bcolors.colorize(f"Welcome back, {username}!", bcolors.LIGHT_GREEN))
@@ -44,14 +44,14 @@ class System:
         return None
 
     def signup(self):
-        username = input(bcolors.colorize("Enter username: ", bcolors.PINK)).strip().lower()
-        password = getpass(bcolors.colorize("Enter password: ", bcolors.PINK)).strip().lower()
+        username = input(bcolors.colorize("Enter username: ", bcolors.  TEAL)).strip().lower()
+        password = getpass(bcolors.colorize("Enter password: ", bcolors.  TEAL)).strip().lower()
         if is_username_taken(self.users, username):
             print(messages.username_exists)
             return
         
-        email = input(bcolors.colorize("Enter email: ", bcolors.PINK)).strip().lower()
-        mobile_number = input(bcolors.colorize("Enter mobile number: ",bcolors.PINK))
+        email = input(bcolors.colorize("Enter email: ", bcolors.  TEAL)).strip().lower()
+        mobile_number = input(bcolors.colorize("Enter mobile number: ",bcolors.  TEAL))
         
         if not validate_email(email):
             print(messages.invalid_email)
@@ -63,8 +63,8 @@ class System:
 
         role = 'admin' if not admin_check(self.users) else 'staff'
         new_user = {
-            'first_name': input(bcolors.colorize("Enter first name: ", bcolors.PINK)),
-            'last_name': input(bcolors.colorize("Enter last name: ", bcolors.PINK)),
+            'first_name': input(bcolors.colorize("Enter first name: ", bcolors.  TEAL)),
+            'last_name': input(bcolors.colorize("Enter last name: ", bcolors.  TEAL)),
             'username': username,
             'password': password,
             'email': email,
@@ -119,13 +119,13 @@ class RestaurantSystem:
         self.table_booking = TableBookingSystem()
         self.order_feature = OrderFeature()
         self.bill_feature = BillFeature()
-        self.bill_dashboard = BillDashboard(self.bill_feature)
+        self.bill_dashboard = BillDashboard()
         self.menu = Menu()
 
     def display_menu(self):
         user = None
         while True:
-            print(bcolors.colorize("\n***** Welcome to One Bite Restaurant System *****", bcolors.TEAL))
+            print(bcolors.colorize("\n***** Welcome to One Bite Restaurant System *****", bcolors.LIGHT_GREEN))
             print("1. Login")
             print("2. Sign up")
             print("3. Exit")

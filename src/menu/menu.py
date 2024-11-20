@@ -2,6 +2,7 @@ import json
 import os
 from src.utility.validations import *
 from src.utility.messages import messages
+from src.utility.color import bcolors
 
 DATABASE_FOLDER = "src/database"
 MENU_FILE_PATH = os.path.join(DATABASE_FOLDER, "menu.json")
@@ -29,7 +30,7 @@ class Menu:
     MEAL_TYPES = [
         "breakfast", "lunch", "dinner", "snacks",
         "soups", "starters", "main_course", "noodles",
-        "rice", "desserts", "extras", "tea_and_coffee", "aerated_beverages", "ice_cream"
+        "rice", "desserts", "tea_and_coffee", "aerated_beverages", "ice_cream"
     ]
 
     def __init__(self, menu_file=MENU_FILE_PATH):
@@ -65,22 +66,22 @@ class Menu:
     def view_menu(self):
         border = "=" * 55
         print(border)
-        print(f"{'RESTAURANT MENU':^55}")
+        print(bcolors.colorize(f"{'RESTAURANT MENU':^55}",bcolors.LIGHT_GREEN))
         print(border)
 
         for meal_type, items in self.menu_data.items():
-            print(f"\n{meal_type.upper():^55}")
+            print(bcolors.colorize(f"\n{meal_type.upper():^55}",bcolors.ORANGE))
             print("-" * 55)
 
             if not items:
-                print(f"{'No items available':^55}")
+                print(bcolors.colorize(f"{'No items available':^55}",bcolors.YELLOW_UNDERLINE))
             else:
-                print(f"{'S.No':<5}{'Item Name':<25}{'Full Price':>10}  {'Half Price':>10}")
+                print(bcolors.colorize(f"{'S.No':<5}{'Item Name':<25}{'Full Price':>10}  {'Half Price':>10}",bcolors.LIGHT_GREEN))
                 print("-" * 55)
                 for index, item in enumerate(items, start=1):
                     full_price = f"{item.full_price}"
                     half_price = f"{item.half_price}" if item.half_price is not None else "N/A"
-                    print(f"{index:<5}{item.name:<25}{full_price:>10}{half_price:>10}")
+                    print(bcolors.colorize(f"{index:<5}{item.name:<25}{full_price:>10}{half_price:>10}",bcolors.CYAN))
         print(border)
 
     def add_item(self, meal_type, name, full_price, half_price):
@@ -95,30 +96,30 @@ class Menu:
         new_item = MenuItem(name, full_price, half_price)
         self.menu_data[meal_type].append(new_item)
         self.save_menu()
-        print(f"Added {new_item} to {meal_type}.")
+        print(bcolors.colorize(f"Added {new_item} to {meal_type}.",bcolors.YELLOW_UNDERLINE))
 
     def handle_add_item(self):
-        search = input("Enter meal type initial: ").strip().lower()
+        search = input(bcolors.colorize("Enter meal type initial: ",bcolors.PINK)).strip().lower()
         matching_meals = self.search_meal_type(search)
 
         if not matching_meals:
-            print(f"No meal types found starting with '{search}'")
+            print(bcolors.colorize(f"No meal types found starting with '{search}'",bcolors.WHITE_BOLD))
             return
 
         if len(matching_meals) > 1:
-            print(f"Matching meal types: {', '.join(matching_meals)}")
-            meal_type = input("Enter the full meal type from the list above: ").strip().lower()
+            print(bcolors.colorize(f"Matching meal types: {', '.join(matching_meals)}",bcolors.LIGHT_GREEN))
+            meal_type = input(bcolors.colorize("Enter the full meal type from the list above: ",bcolors.PINK)).strip().lower()
         else:
             meal_type = matching_meals[0]
 
-        name = input("Enter item name: ").strip()
+        name = input(bcolors.colorize("Enter item name: ",bcolors.PINK)).strip()
         if not validate_item(name):
-            print("Invalid item name.")
+            print(bcolors.colorize("Invalid item name.",bcolors.RED))
             return
 
         try:
-            full_price = float(input("Enter full price: ").strip())
-            half_price_input = input("Enter half price (leave blank if not applicable): ").strip()
+            full_price = float(input(bcolors.colorize("Enter full price: ",bcolors.PINK)).strip())
+            half_price_input = input(bcolors.colorize("Enter half price (leave blank if not applicable): ",bcolors.PINK)).strip()
             half_price = float(half_price_input) if half_price_input else None
         except ValueError:
             print(messages.invalid_input)
@@ -127,23 +128,23 @@ class Menu:
         self.add_item(meal_type, name, full_price, half_price)
 
     def handle_remove_item(self):
-        search = input("Enter meal type initial: ").strip().lower()
+        search = input(bcolors.colorize("Enter meal type initial: ",bcolors.PINK)).strip().lower()
         matching_meals = self.search_meal_type(search)
 
         if not matching_meals:
-            print(f"No meal types found starting with '{search}'")
+            print(bcolors.colorize(f"No meal types found starting with '{search}'",bcolors.YELLOW_UNDERLINE))
             return
 
         if len(matching_meals) > 1:
-            print(f"Matching meal types: {', '.join(matching_meals)}")
-            meal_type = input("Enter the full meal type from the list above: ").strip().lower()
+            print(bcolors.colorize(f"Matching meal types: {', '.join(matching_meals)}",bcolors.YELLOW_UNDERLINE))
+            meal_type = input(bcolors.colorize("Enter the full meal type from the list above: ",bcolors.PINK)).strip().lower()
         else:
             meal_type = matching_meals[0]
 
         items = self.menu_data[meal_type]
 
         if not items:
-            print(f"No items available under {meal_type.title()}.")
+            print(bcolors.colorize(f"No items available under {meal_type.title()}.",bcolors.YELLOW_UNDERLINE))
             return
 
         print(f"\n{meal_type.upper()} Items:")
@@ -151,20 +152,20 @@ class Menu:
             print(f"{idx}. {item.name} (Full Price: {item.full_price}, Half Price: {item.half_price or 'N/A'})")
 
         try:
-            item_index = int(input("Enter the item number to remove: ").strip()) - 1
+            item_index = int(input(bcolors.colorize("Enter the item number to remove: ",bcolors.PINK)).strip()) - 1
             if item_index < 0 or item_index >= len(items):
                 print(messages.invalid_choice)
                 return
 
             item_to_remove = items[item_index]
-            confirm = input(f"Are you sure you want to remove '{item_to_remove.name}'? (yes/no): ").strip().lower()
+            confirm = input(bcolors.colorize(f"Are you sure you want to remove '{item_to_remove.name}'? (yes/no): ",bcolors.PINK)).strip().lower()
             if confirm != 'yes':
-                print("Operation cancelled.")
+                print(bcolors.colorize("Operation cancelled.",bcolors.YELLOW_UNDERLINE))
                 return
 
             del items[item_index]
             self.save_menu()
-            print(f"Removed {item_to_remove.name} from {meal_type}.")
+            print(bcolors.colorize(f"Removed {item_to_remove.name} from {meal_type}.",bcolors.YELLOW_UNDERLINE))
         except ValueError:
             print(messages.invalid_input)
 
